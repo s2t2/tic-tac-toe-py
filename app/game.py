@@ -3,18 +3,6 @@ from itertools import cycle
 
 from app.board import Board
 
-# if a single player has any of these combination of squares, they win:
-#WINNING_COMBINATIONS = [
-#    [0,1,2], # Row 1
-#    [3,4,5], # Row 2
-#    [6,7,8], # Row 3
-#    [1,4,7], # Column A
-#    [2,5,8], # Column B
-#    [3,6,9], # Column C
-#    [1,5,9], # Diagonal ASC
-#    [3,5,7], # Diagonal DESC
-#]
-
 class Game:
     def __init__(self, turn_history=None):
         self.players = ["X", "O"]
@@ -49,7 +37,6 @@ class Game:
             # DON'T REPEAT THE PROCESS IF ANY OF THESE CONDITIONS ARE MET...
 
             if self.board.winning_player_name:
-                #self.result = self.active_player
                 self.result = f"{self.board.winning_player_name} WINS!"
 
             #print("SELECTABLE:", self.board.selectable_squares)
@@ -57,7 +44,6 @@ class Game:
                 self.result = "TIE"
 
         print(self.board)
-
         print("---------------------")
         print("RESULT:", self.result)
         print("THANKS FOR PLAYING!")
