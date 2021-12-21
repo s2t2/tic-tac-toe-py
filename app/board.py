@@ -125,4 +125,3 @@ if __name__ == "__main__":
     print(board)
 
     print(board.selectable_squares)
-    #print(board.move_history)

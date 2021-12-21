@@ -3,41 +3,71 @@ from itertools import cycle
 
 from app.board import Board
 
+# if a single player has any of these combination of squares, they win:
+#WINNING_COMBINATIONS = [
+#    [0,1,2], # Row 1
+#    [3,4,5], # Row 2
+#    [6,7,8], # Row 3
+#    [1,4,7], # Column A
+#    [2,5,8], # Column B
+#    [3,6,9], # Column C
+#    [1,5,9], # Diagonal ASC
+#    [3,5,7], # Diagonal DESC
+#]
+
 class Game:
-    def __init__(self):
-        self.players = ["X", "O"]
+    def __init__(self, players=None, turn_history=None):
+        self.players = players or ["X", "O"]
         self.players_cycle = cycle(self.players) # BE CAREFUL OF INFINITE LOOPS
-        self.active_player = None
-        self.winner = None
         self.board = Board()
+        self.active_player = None
+        self.turn_history = turn_history or []
+        self.result = None
 
     def toggle_active_player(self):
         self.active_player = next(self.players_cycle) # https://stackoverflow.com/questions/5237611/itertools-cycle-next
 
-    def main_loop(self):
-        while self.winner == None:
+    def play(self):
+        while self.result == None:
+
+            # BEGINNING OF TURN (PLAYER ALTERNATION)
+
             self.toggle_active_player()
-
             print(self.board)
-            selected_square = input(f"PLAYER {self.active_player} PLEASE SELECT A SQUARE (i.e. 'A1'): ")
 
-            #if selected_square == "QUIT":
-            #    self.winner == self.active_player
+            # SQUARE SELECTION
 
-            self.board.set_square(selected_square, self.active_player)
+            while True:
+                square_name = input(f"PLAYER {self.active_player} PLEASE SELECT A SQUARE (i.e. 'A1'): ").upper()
+                try:
+                    self.board.set_square(square_name, self.active_player)
+                    break
+                except:
+                    print(f"OOPS UNRECOGNIZED SQUARE NAME '{square_name}'. PLEASE TRY AGAIN...")
+                    next
 
-            # todo: evaluate new game state
-            # todo: determine if win condition is reached
+            # DON'T REPEAT THE PROCESS IF ANY OF THESE CONDITIONS ARE MET...
 
-            # if self.turn_counter >= "QUIT":
-            #     self.winner == self.active_player
+            #if self.board.is_solved:
+            #    self.result == self.active_player
 
+            if not any(self.board.selectable_squares):
+                self.result == "TIE"
 
-        #print("WINNER IS ...", self.winner)
+        print("RESULT IS ...", self.result)
 
 
 if __name__ == "__main__":
 
     game = Game()
+    game.play()
 
-    game.main_loop()
+    #game = Game(turn_history=[
+    #    ("X", "A1"),
+    #    ("O", "C2"),
+    #    ("X", "B1"),
+    #    ("O", "B2"),
+    #    ("X", "C1"),
+    #])
+    #print(game.board)
+    #print("RESULT:", game.result)
