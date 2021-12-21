@@ -48,8 +48,9 @@ class Game:
 
             # DON'T REPEAT THE PROCESS IF ANY OF THESE CONDITIONS ARE MET...
 
-            #if self.board.is_solved:
-            #    self.result == self.active_player
+            if self.board.winning_player_name:
+                #self.result = self.active_player
+                self.result = f"{self.board.winning_player_name} WINS!"
 
             #print("SELECTABLE:", self.board.selectable_squares)
             if not any(self.board.selectable_squares):

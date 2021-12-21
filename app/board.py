@@ -54,8 +54,20 @@ class Square:
     #def col_idx(self):
     #    return 0
 
+# if a single player has any of these combination of squares, they win:
+WINNING_COMBINATIONS = [
+    ["A1", "B1", "C1"], # [0,1,2], # Row 1
+    ["A2", "B2", "C2"], # [3,4,5], # Row 2
+    ["A3", "B3", "C3"], # [6,7,8], # Row 3
+    ["A1", "A2", "A3"], # [1,4,7], # Column A
+    ["B1", "B2", "B3"], # [2,5,8], # Column B
+    ["C1", "C2", "C3"], # [3,6,9], # Column C
+    ["A3", "B2", "C1"], # [1,5,9], # Diagonal ASC
+    ["A1", "B2", "C3"], # [3,5,7], # Diagonal DESC
+]
 
 class Board:
+
     def __init__(self):
         #self.squares = [Square(square_name) for square_name in SQUARE_NAMES]
 
@@ -107,10 +119,36 @@ class Board:
             square.player_name = player_name
 
 
-    #@property
-    #def selectable_squares():
-    #    return self.squares
+    def get_squares(self, square_names):
+        return [square for square in self.squares if square.name in square_names]
 
+
+    #@property
+    #def is_solved(self):
+    #    # TRUE if the same player has all squares in any one of the winning combos
+#
+    #    for square_names in WINNING_COMBINATIONS:
+    #        squares = self.get_squares(square_names)
+    #        player_names = [square.player_name for square in squares] #> ['X', None, None]
+    #        if len(set(player_names)) == 1:
+    #            return True
+    #    return False
+
+
+    #@property
+    #def is_solved(self):
+    #    return True if self.winning_player_name else False
+
+    @property
+    def winning_player_name(self):
+        for square_names in WINNING_COMBINATIONS:
+            squares = self.get_squares(square_names)
+            player_names = [square.player_name for square in squares] #> ['X', None, None]
+            # if the same player controls all three squares:
+            if len(player_names) == 3 and len(list(set(player_names))) == 1:
+                winning_player = player_names[0]
+                return winning_player
+        return None
 
 
 
