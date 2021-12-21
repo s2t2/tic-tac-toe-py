@@ -56,8 +56,11 @@ class Game:
             if not any(self.board.selectable_squares):
                 self.result = "TIE"
 
-        print("THANKS FOR PLAYING!")
+        print(self.board)
+
+        print("---------------------")
         print("RESULT:", self.result)
+        print("THANKS FOR PLAYING!")
 
 
 if __name__ == "__main__":
