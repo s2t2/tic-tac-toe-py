@@ -16,8 +16,8 @@ from app.board import Board
 #]
 
 class Game:
-    def __init__(self, players=None, turn_history=None):
-        self.players = players or ["X", "O"]
+    def __init__(self, turn_history=None):
+        self.players = ["X", "O"]
         self.players_cycle = cycle(self.players) # BE CAREFUL OF INFINITE LOOPS
         self.board = Board()
         self.active_player = None
@@ -28,7 +28,7 @@ class Game:
         self.active_player = next(self.players_cycle) # https://stackoverflow.com/questions/5237611/itertools-cycle-next
 
     def play(self):
-        while self.result == None:
+        while not self.result:
 
             # BEGINNING OF TURN (PLAYER ALTERNATION)
 
@@ -51,10 +51,12 @@ class Game:
             #if self.board.is_solved:
             #    self.result == self.active_player
 
+            #print("SELECTABLE:", self.board.selectable_squares)
             if not any(self.board.selectable_squares):
-                self.result == "TIE"
+                self.result = "TIE"
 
-        print("RESULT IS ...", self.result)
+        print("THANKS FOR PLAYING!")
+        print("RESULT:", self.result)
 
 
 if __name__ == "__main__":
