@@ -46,6 +46,15 @@ class Game:
         self.toggle_active_player()
 
 
+    def take_turns(self, turns: list):
+        """
+        This is a high-level interface that increments the turn history.
+        Pass the turns param as a list of tuples in the form of (player_name, square_name).
+        """
+        for turn in turns:
+            self.take_turn(turn)
+
+
 
 
 

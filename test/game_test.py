@@ -156,13 +156,19 @@ def test_compile_turn_history():
         ("X", "C1"),
     ]
 
-    #game = Game()
-    #game.take_turns(turns)
-    #assert game.turn_history == turns
+    # TAKE TURN
 
     game = Game()
     for turn in turns:
         game.take_turn(turn)
+    assert game.turn_history == turns
+    assert game.active_player == "O"
+    assert game.outcome() == X_WINS
+
+    # TAKE TURNS
+
+    game = Game()
+    game.take_turns(turns)
     assert game.turn_history == turns
     assert game.active_player == "O"
     assert game.outcome() == X_WINS
