@@ -26,6 +26,6 @@ python -m app.game
 
 ## Testing
 
-``sh
+```sh
 pytest
 ```

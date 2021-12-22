@@ -32,12 +32,6 @@ class Game:
                 self.board.set_square(square_name, player_name)
                 self.toggle_active_player()
 
-
-    #def take_turn(self, player_name, square_name):
-    #    self.board.set_square(player_name, square_name)
-    #    self.toggle_active_player()
-
-
     def toggle_active_player(self):
         self.active_player = next(self.players_cycle) # https://stackoverflow.com/questions/5237611/itertools-cycle-next
 
@@ -55,9 +49,6 @@ class Game:
 
     def play(self):
         while not self.is_over:
-            #
-            # SQUARE SELECTION
-            #
             print(self.board)
             while True:
                 square_name = input(f"PLAYER {self.active_player} PLEASE SELECT A SQUARE (i.e. 'A1'): ").upper()
@@ -68,42 +59,22 @@ class Game:
                     print(f"OOPS UNRECOGNIZED SQUARE NAME '{square_name}'. PLEASE TRY AGAIN...")
                     next
             self.toggle_active_player()
-
-            # DON'T REPEAT THE PROCESS IF ANY OF THESE CONDITIONS ARE MET...
-
-            #if self.board.winning_player_name:
-            #    self.result = f"{self.board.winning_player_name} WINS!"
-            #
-            ##print("SELECTABLE:", self.board.selectable_squares)
-            #if not any(self.board.selectable_squares):
-            #    self.result = "TIE"
-
-        #print(self.board)
-        #print("---------------------")
-        #print("RESULTS:")
-        #if self.board.winning_player_name:
-        #    print(f"{self.board.winning_player_name} WINS!")
-        #else:
-        #    print("TIE")
-        #print("---------------------")
-        #print("THANKS FOR PLAYING!")
-        self.show_results()
-
-    #def take_turn(self, square_name):
-    #    self.board.set_square(square_name, self.active_player_name)
-    #    self.toggle_active_player()
-
-    def show_results(self):
         print(self.board)
+        print(self.outcome())
 
-        if self.board.winning_player_name:
-            result = f"{self.board.winning_player_name} WINS!"
+    def outcome(self):
+        winner = self.board.winning_player_name
+        if winner:
+            message = f"{winner} WINS!"
+            reason = "THREE_IN_A_ROW"
         elif not any(self.board.selectable_squares):
-            result = "TIE"
+            message = "TIE"
+            reason = "NO_MORE_SQUARES"
         else:
-            result = "IN PROGRESS"
-        print("RESULT:", result)
-        print("THANKS FOR PLAYING!")
+            message = "IN PROGRESS"
+            reason = "IN_PROGRESS"
+        return {"message": message, "reason": reason, "winner": winner}
+
 
 
 if __name__ == "__main__":
@@ -137,4 +108,4 @@ if __name__ == "__main__":
             ("O", "B2"),
             ("X", "C1"),
         ])
-        game.show_results()
+        game.outcome()
