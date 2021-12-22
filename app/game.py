@@ -23,14 +23,10 @@ class Game:
         self.active_player = None
         self.toggle_active_player() # set X as the first player
 
-        self.result = None
-
         # load from pre-saved state
-        self.turn_history = turn_history or []
-        if any(self.turn_history):
-            for player_name, square_name in self.turn_history:
-                self.board.set_square(square_name, player_name)
-                self.toggle_active_player()
+        self.turn_history = [] # instead of setting directly, simulate gamplay through the turn taking mechanism
+        if turn_history:
+            self.take_turns(turn_history)
 
     def toggle_active_player(self):
         self.active_player = next(self.players_cycle) # https://stackoverflow.com/questions/5237611/itertools-cycle-next
@@ -45,7 +41,6 @@ class Game:
         self.turn_history.append(turn)
         self.toggle_active_player()
 
-
     def take_turns(self, turns: list):
         """
         This is a high-level interface that increments the turn history.
@@ -54,10 +49,20 @@ class Game:
         for turn in turns:
             self.take_turn(turn)
 
-
-
-
-
+    def play(self):
+        while not self.is_over:
+            print(self.board)
+            while True:
+                square_name = input(f"PLAYER {self.active_player} PLEASE SELECT A SQUARE (i.e. 'A1'): ").upper()
+                try:
+                    turn = (self.active_player, square_name)
+                    self.take_turn(turn)
+                    break # break out of the input loop to conclude the turn and go to the next player
+                except:
+                    print(f"OOPS UNRECOGNIZED SQUARE NAME '{square_name}'. PLEASE TRY AGAIN...")
+                    next # ask the user for another input
+        print(self.board)
+        print(self.outcome())
 
 
     @property
@@ -71,21 +76,6 @@ class Game:
     @property
     def out_of_squares(self) -> bool:
         return not any(self.board.selectable_squares)
-
-    def play(self):
-        while not self.is_over:
-            print(self.board)
-            while True:
-                square_name = input(f"PLAYER {self.active_player} PLEASE SELECT A SQUARE (i.e. 'A1'): ").upper()
-                try:
-                    self.board.set_square(square_name, self.active_player)
-                    break
-                except:
-                    print(f"OOPS UNRECOGNIZED SQUARE NAME '{square_name}'. PLEASE TRY AGAIN...")
-                    next
-            self.toggle_active_player()
-        print(self.board)
-        print(self.outcome())
 
     def outcome(self):
         winner = self.board.winning_player_name
