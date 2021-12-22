@@ -28,19 +28,19 @@ def test_square_selection():
 
 def test_winner_determination():
     board = Board()
-    assert board.winning_player_name == None
+    assert board.winner == None
 
     board.set_square("A1", "X")
-    assert board.winning_player_name == None
+    assert board.winner == None
 
     board.set_square("A2", "O")
-    assert board.winning_player_name == None
+    assert board.winner == None
 
     board.set_square("B1", "X")
-    assert board.winning_player_name == None
+    assert board.winner == None
 
     board.set_square("B2", "0")
-    assert board.winning_player_name == None
+    assert board.winner == None
 
     board.set_square("C1", "X")
-    assert board.winning_player_name == "X"
+    assert board.winner["player_name"] == "X"

@@ -46,13 +46,8 @@ class Board:
     def get_squares(self, square_names):
         return [square for square in self.squares if square.name in square_names]
 
-
-    #
-    # BOARD ANALYSIS
-    #
-
     @property
-    def selectable_squares(self):
+    def selectable_squares(self) -> list:
         return [square for square in self.squares if not square.player_name]
 
     @property
@@ -60,37 +55,46 @@ class Board:
         return not any(self.selectable_squares)
 
     @property
-    def winning_player_name(self):
+    def winner(self):
         for square_names in WINNING_COMBINATIONS:
             squares = self.get_squares(square_names)
             player_names = [square.player_name for square in squares] #> ['X', None, None]
             # if the same player controls all three squares:
             if len(player_names) == 3 and len(list(set(player_names))) == 1:
                 winning_player = player_names[0]
-                return winning_player
+                if winning_player:
+                    return {"player_name": winning_player, "square_names": square_names}
         return None
 
     @property
-    def has_winner(self) -> bool:
-        return self.winning_player_name != None
-
-    @property
-    def is_over(self) -> bool:
-        return (self.has_winner or self.out_of_squares)
-
     def outcome(self):
-        winner = self.winning_player_name
+        winner = self.winner
         if winner:
-            message = f"{winner} WINS!"
-            reason = "THREE_IN_A_ROW"
-        elif not any(self.selectable_squares):
-            message = "TIE"
-            reason = "NO_MORE_SQUARES"
-        else:
-            message = "IN PROGRESS"
-            reason = "IN_PROGRESS"
-        return {"message": message, "reason": reason, "winner": winner}
+            return {
+                "message": f"{winner['player_name']} WINS!",
+                "reason": "THREE_IN_A_ROW",
+                "winner": winner
+            }
+        elif self.out_of_squares:
+            return {
+                "message": "TIE GAME",
+                "reason": "NO_MORE_SQUARES",
+                "winner": None
+            }
 
+    #@property
+    #def winning_player_name(self):
+    #    try:
+    #        return self.winner["player_name"]
+    #    except:
+    #        pass
+
+    #@property
+    #def winning_squares(self):
+    #    try:
+    #        return self.winner["square_names"]
+    #    except:
+    #        pass
 
 
 
@@ -108,4 +112,4 @@ if __name__ == "__main__":
 
     print(board.selectable_squares)
 
-    print(board.outcome())
+    print(board.outcome)

@@ -17,8 +17,7 @@ class Game:
 
         """
         self.board = Board()
-        self.is_over = self.board.is_over
-        self.outcome = self.board.outcome
+        #self.outcome = self.board.outcome
 
         self.players = ["X", "O"]
         self.players_cycle = cycle(self.players) # BE CAREFUL OF INFINITE LOOPS
@@ -51,8 +50,18 @@ class Game:
         for turn in turns:
             self.take_turn(turn)
 
+
+
+    @property
+    def outcome(self):
+        return self.board.outcome
+
+    @property
+    def winner(self):
+        return self.board.winner
+
     def play(self):
-        while not self.is_over:
+        while not self.outcome:
             print(self.board)
             while True:
                 square_name = input(f"PLAYER {self.active_player} PLEASE SELECT A SQUARE (i.e. 'A1'): ").upper()
@@ -64,7 +73,7 @@ class Game:
                     print(f"OOPS UNRECOGNIZED SQUARE NAME '{square_name}'. PLEASE TRY AGAIN...")
                     next # ask the user for another input
         print(self.board)
-        print(self.outcome())
+        print(self.outcome)
 
 
 
