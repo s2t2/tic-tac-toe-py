@@ -1,6 +1,10 @@
 
 from app.game import Game
 
+# OUTCOMES
+IN_PROGRESS = {'message': 'IN PROGRESS', 'reason': "IN_PROGRESS", 'winner': None}
+X_WINS = {'message': 'X WINS!', 'reason': 'THREE_IN_A_ROW', 'winner': 'X'}
+TIE = {'message': 'TIE', 'reason': 'NO_MORE_SQUARES', 'winner': None}
 
 def test_toggle_active_player():
     game = Game()
@@ -101,20 +105,16 @@ def test_play_from_preloaded_state():
 
 def test_outcome_determination():
 
-    in_progress = {'message': 'IN PROGRESS', 'reason': "IN_PROGRESS", 'winner': None}
-    x_wins = {'message': 'X WINS!', 'reason': 'THREE_IN_A_ROW', 'winner': 'X'}
-    tie = {'message': 'TIE', 'reason': 'NO_MORE_SQUARES', 'winner': None}
-
     # TEST WINNER OUTCOME
 
     game = Game()
 
     expected_outcomes = [
-        {"turn": ("X", "A1"), "outcome": in_progress},
-        {"turn": ("O", "A2"), "outcome": in_progress},
-        {"turn": ("X", "B1"), "outcome": in_progress},
-        {"turn": ("O", "B2"), "outcome": in_progress},
-        {"turn": ("X", "C1"), "outcome": x_wins},
+        {"turn": ("X", "A1"), "outcome": IN_PROGRESS},
+        {"turn": ("O", "A2"), "outcome": IN_PROGRESS},
+        {"turn": ("X", "B1"), "outcome": IN_PROGRESS},
+        {"turn": ("O", "B2"), "outcome": IN_PROGRESS},
+        {"turn": ("X", "C1"), "outcome": X_WINS},
     ]
 
     for d in expected_outcomes:
@@ -127,15 +127,15 @@ def test_outcome_determination():
     game = Game()
 
     expected_outcomes = [
-        {"turn": ("X", "A1"), "outcome": in_progress},
-        {"turn": ("O", "B2"), "outcome": in_progress},
-        {"turn": ("X", "B1"), "outcome": in_progress},
-        {"turn": ("O", "C1"), "outcome": in_progress},
-        {"turn": ("X", "A3"), "outcome": in_progress},
-        {"turn": ("O", "A2"), "outcome": in_progress},
-        {"turn": ("X", "C2"), "outcome": in_progress},
-        {"turn": ("X", "B3"), "outcome": in_progress},
-        {"turn": ("O", "C3"), "outcome": tie},
+        {"turn": ("X", "A1"), "outcome": IN_PROGRESS},
+        {"turn": ("O", "B2"), "outcome": IN_PROGRESS},
+        {"turn": ("X", "B1"), "outcome": IN_PROGRESS},
+        {"turn": ("O", "C1"), "outcome": IN_PROGRESS},
+        {"turn": ("X", "A3"), "outcome": IN_PROGRESS},
+        {"turn": ("O", "A2"), "outcome": IN_PROGRESS},
+        {"turn": ("X", "C2"), "outcome": IN_PROGRESS},
+        {"turn": ("X", "B3"), "outcome": IN_PROGRESS},
+        {"turn": ("O", "C3"), "outcome": TIE},
     ]
 
     for d in expected_outcomes:
@@ -143,3 +143,26 @@ def test_outcome_determination():
         game.board.set_square(square_name, player_name)
         print(game.board)
         assert game.outcome() == d["outcome"]
+
+
+
+def test_compile_turn_history():
+
+    turns = [
+        ("X", "A1"),
+        ("O", "A2"),
+        ("X", "B1"),
+        ("O", "B2"),
+        ("X", "C1"),
+    ]
+
+    #game = Game()
+    #game.take_turns(turns)
+    #assert game.turn_history == turns
+
+    game = Game()
+    for turn in turns:
+        game.take_turn(turn)
+    assert game.turn_history == turns
+    assert game.active_player == "O"
+    assert game.outcome() == X_WINS

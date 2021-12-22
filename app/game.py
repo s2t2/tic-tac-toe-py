@@ -35,6 +35,22 @@ class Game:
     def toggle_active_player(self):
         self.active_player = next(self.players_cycle) # https://stackoverflow.com/questions/5237611/itertools-cycle-next
 
+    def take_turn(self, turn: tuple):
+        """
+        This is a high-level interface that increments the turn history.
+        Pass the turn param as a tuple in the form of (player_name, square_name).
+        """
+        player_name, square_name = turn
+        self.board.set_square(square_name, player_name)
+        self.turn_history.append(turn)
+        self.toggle_active_player()
+
+
+
+
+
+
+
     @property
     def is_over(self) -> bool:
         return (self.has_winner or self.out_of_squares)

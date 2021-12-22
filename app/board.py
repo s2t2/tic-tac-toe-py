@@ -20,13 +20,6 @@ class Board:
             Square("A2"), Square("B2"), Square("C2"),
             Square("A3"), Square("B3"), Square("C3"),
         ]
-        # consider this instead, for computational efficiency:
-        # self.squares = {
-        #     "A1": Square("A1"),
-        #     "B1": Square("B1")
-        #     # ...
-        # }
-        # then update self.get_square to use a dictionary-based approach
 
     def __repr__(self):
         return f"""
@@ -45,25 +38,14 @@ class Board:
         return [square for square in self.squares if not square.player_name]
 
     def get_square(self, square_name):
-        #return self.squares[square_name]
+        # todo: change to a dictionary-based lookup approach for additional computational efficiency, as necessary
+        # ... which would require changing the initial structure of self.squares
         return [square for square in self.squares if square.name == square_name][0]
 
     def set_square(self, square_name, player_name):
-        #r, c = row_col(square_name)
-        #
-        ## if that square is selectable:
-        #if not self.grid[r][c]:
-        #
-        #    # select it
-        #    self.grid[r][c] = player_name
-        #
-        #    # and manually update selectable squares?
-        #    #del self.selectable_squares[self.selectable_squares.index(square_name)]
-
-        square = self.get_square(square_name) #self.squares[square_name]
+        square = self.get_square(square_name)
         if not square.player_name:
             square.player_name = player_name
-
 
     def get_squares(self, square_names):
         return [square for square in self.squares if square.name in square_names]
