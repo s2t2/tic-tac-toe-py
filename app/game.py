@@ -17,6 +17,8 @@ class Game:
 
         """
         self.board = Board()
+        self.is_over = self.board.is_over
+        self.outcome = self.board.outcome
 
         self.players = ["X", "O"]
         self.players_cycle = cycle(self.players) # BE CAREFUL OF INFINITE LOOPS
@@ -65,30 +67,7 @@ class Game:
         print(self.outcome())
 
 
-    @property
-    def is_over(self) -> bool:
-        return (self.has_winner or self.out_of_squares)
 
-    @property
-    def has_winner(self) -> bool:
-        return self.board.winning_player_name != None
-
-    @property
-    def out_of_squares(self) -> bool:
-        return not any(self.board.selectable_squares)
-
-    def outcome(self):
-        winner = self.board.winning_player_name
-        if winner:
-            message = f"{winner} WINS!"
-            reason = "THREE_IN_A_ROW"
-        elif not any(self.board.selectable_squares):
-            message = "TIE"
-            reason = "NO_MORE_SQUARES"
-        else:
-            message = "IN PROGRESS"
-            reason = "IN_PROGRESS"
-        return {"message": message, "reason": reason, "winner": winner}
 
 
 

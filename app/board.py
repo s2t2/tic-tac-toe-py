@@ -33,10 +33,6 @@ class Board:
 
         """
 
-    @property
-    def selectable_squares(self):
-        return [square for square in self.squares if not square.player_name]
-
     def get_square(self, square_name):
         # todo: change to a dictionary-based lookup approach for additional computational efficiency, as necessary
         # ... which would require changing the initial structure of self.squares
@@ -50,6 +46,19 @@ class Board:
     def get_squares(self, square_names):
         return [square for square in self.squares if square.name in square_names]
 
+
+    #
+    # BOARD ANALYSIS
+    #
+
+    @property
+    def selectable_squares(self):
+        return [square for square in self.squares if not square.player_name]
+
+    @property
+    def out_of_squares(self) -> bool:
+        return not any(self.selectable_squares)
+
     @property
     def winning_player_name(self):
         for square_names in WINNING_COMBINATIONS:
@@ -60,6 +69,30 @@ class Board:
                 winning_player = player_names[0]
                 return winning_player
         return None
+
+    @property
+    def has_winner(self) -> bool:
+        return self.winning_player_name != None
+
+    @property
+    def is_over(self) -> bool:
+        return (self.has_winner or self.out_of_squares)
+
+    def outcome(self):
+        winner = self.winning_player_name
+        if winner:
+            message = f"{winner} WINS!"
+            reason = "THREE_IN_A_ROW"
+        elif not any(self.selectable_squares):
+            message = "TIE"
+            reason = "NO_MORE_SQUARES"
+        else:
+            message = "IN PROGRESS"
+            reason = "IN_PROGRESS"
+        return {"message": message, "reason": reason, "winner": winner}
+
+
+
 
 
 
@@ -74,3 +107,5 @@ if __name__ == "__main__":
     print(board)
 
     print(board.selectable_squares)
+
+    print(board.outcome())
