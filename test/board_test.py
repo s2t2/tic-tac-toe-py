@@ -39,7 +39,7 @@ def test_winner_determination():
     board.set_square("B1", "X")
     assert board.winner == None
 
-    board.set_square("B2", "0")
+    board.set_square("B2", "O")
     assert board.winner == None
 
     board.set_square("C1", "X")
