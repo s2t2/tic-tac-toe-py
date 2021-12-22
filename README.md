@@ -4,12 +4,28 @@
 
 An adversarial game.
 
-## Usage
+## Setup
 
 ```sh
-python -m app.board
+conda create -n tictactoe-env python=3.8
 ```
 
 ```sh
+conda activate tictactoe-env
+```
+
+```sh
+pip install -r requirements.txt
+```
+
+## Usage
+
+```sh
 python -m app.game
+```
+
+## Testing
+
+```sh
+pytest
 ```
