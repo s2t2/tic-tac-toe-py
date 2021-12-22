@@ -21,10 +21,6 @@ pip install -r requirements.txt
 ## Usage
 
 ```sh
-python -m app.board
-```
-
-```sh
 python -m app.game
 ```
 
