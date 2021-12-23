@@ -81,22 +81,7 @@ class Game:
                     print(f"OOPS UNRECOGNIZED SQUARE NAME '{square_name}'. PLEASE TRY AGAIN...")
                     next # ask the user for another input
         print(self.board)
-        print(self.outcome.to_dict())
-
-    @property
-    def winner(self):
-        """
-        Checks to see if any win conditions have been met, and if so by which player.
-        """
-        for square_names in WINNING_COMBINATIONS:
-            squares = self.board.get_squares(square_names)
-            player_names = [square.player_name for square in squares] #> ['X', None, None]
-            # if the same player controls all three squares:
-            if len(player_names) == 3 and len(list(set(player_names))) == 1:
-                winning_player = player_names[0]
-                if winning_player:
-                    return {"player_name": winning_player, "square_names": square_names}
-        return None
+        print(self.outcome)
 
     @property
     def winner(self):
@@ -137,20 +122,17 @@ class Game:
         winner = self.winner
         if winner:
             #return Outcome(winner=winner, reason=WIN_REASON)
-            player_name = winner["player_name"]
             return {
                 "reason": WIN_REASON,
-                "message": f"{player_name} WINS!",
-                "winning_player_name": player_name,
-                "winning_square_names": winner["square_names"]
+                "message": f"{winner['player_name']} WINS!",
+                "winner": winner
             }
         elif self.board.out_of_squares:
             #return Outcome(winner=None, reason=TIE_REASON)
             return {
                 "reason": TIE_REASON,
                 "message": "TIE GAME",
-                "winning_player_name": None,
-                "winning_square_names": None
+                "winner": None
             }
         else:
             return None

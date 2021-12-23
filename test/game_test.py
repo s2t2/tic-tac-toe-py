@@ -116,7 +116,7 @@ def test_compile_turn_history():
         game.take_turn(turn)
     assert game.turn_history == turns
     assert game.active_player == "O"
-    assert game.outcome["winning_player_name"] == "X"
+    assert game.outcome["winner"]["player_name"] == "X"
 
     # TAKE TURNS
 
@@ -124,7 +124,7 @@ def test_compile_turn_history():
     game.take_turns(turns)
     assert game.turn_history == turns
     assert game.active_player == "O"
-    assert game.outcome["winning_player_name"] == "X"
+    assert game.outcome["winner"]["player_name"] == "X"
 
 
 def test_outcome():
@@ -141,8 +141,10 @@ def test_outcome():
     assert game.outcome == {
         'message': 'X WINS!',
         'reason': 'THREE_IN_A_ROW',
-        'winning_player_name': 'X',
-        'winning_square_names': ['A1', 'B1', 'C1']
+        'winner': {
+            'player_name': 'X',
+            'square_names': ['A1', 'B1', 'C1']
+        }
     }
 
     # tie games
@@ -156,8 +158,7 @@ def test_outcome():
     assert game.outcome == {
         'message': 'TIE GAME',
         'reason': 'NO_MORE_SQUARES',
-        'winning_player_name': None,
-        'winning_square_names': None
+        'winner': None
     }
 
     # in-progress games have no outcome
