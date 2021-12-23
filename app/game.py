@@ -2,6 +2,22 @@
 from itertools import cycle
 
 from app.board import Board
+#from app.outcome import Outcome #, WIN_REASON, TIE_REASON
+
+WIN_REASON = "THREE_IN_A_ROW"
+TIE_REASON = "NO_MORE_SQUARES"
+
+# if a single player has any of these combination of squares, they win:
+WINNING_COMBINATIONS = [
+    ["A1", "B1", "C1"], # [0,1,2], # Row 1
+    ["A2", "B2", "C2"], # [3,4,5], # Row 2
+    ["A3", "B3", "C3"], # [6,7,8], # Row 3
+    ["A1", "A2", "A3"], # [1,4,7], # Column A
+    ["B1", "B2", "B3"], # [2,5,8], # Column B
+    ["C1", "C2", "C3"], # [3,6,9], # Column C
+    ["A3", "B2", "C1"], # [1,5,9], # Diagonal ASC
+    ["A1", "B2", "C3"], # [3,5,7], # Diagonal DESC
+]
 
 class Game:
     def __init__(self, turn_history=None):
@@ -50,20 +66,12 @@ class Game:
         for turn in turns:
             self.take_turn(turn)
 
-
-
-    @property
-    def outcome(self):
-        return self.board.outcome
-
-    @property
-    def winner(self):
-        return self.board.winner
-
     def play(self):
+        """Play a Human vs Human game!"""
         while not self.outcome:
             print(self.board)
             while True:
+                # human turn
                 square_name = input(f"PLAYER {self.active_player} PLEASE SELECT A SQUARE (i.e. 'A1'): ").upper()
                 try:
                     turn = (self.active_player, square_name)
@@ -73,7 +81,87 @@ class Game:
                     print(f"OOPS UNRECOGNIZED SQUARE NAME '{square_name}'. PLEASE TRY AGAIN...")
                     next # ask the user for another input
         print(self.board)
-        print(self.outcome)
+        print(self.outcome.to_dict())
+
+    @property
+    def winner(self):
+        """
+        Checks to see if any win conditions have been met, and if so by which player.
+        """
+        for square_names in WINNING_COMBINATIONS:
+            squares = self.board.get_squares(square_names)
+            player_names = [square.player_name for square in squares] #> ['X', None, None]
+            # if the same player controls all three squares:
+            if len(player_names) == 3 and len(list(set(player_names))) == 1:
+                winning_player = player_names[0]
+                if winning_player:
+                    return {"player_name": winning_player, "square_names": square_names}
+        return None
+
+    @property
+    def winner(self):
+        """
+        Checks to see if any win conditions have been met, and if so by which player.
+        """
+        for square_names in WINNING_COMBINATIONS:
+            squares = self.board.get_squares(square_names)
+            player_names = [square.player_name for square in squares] #> ['X', None, None]
+            # if the same player controls all three squares:
+            if len(player_names) == 3 and len(list(set(player_names))) == 1:
+                winning_player = player_names[0]
+                if winning_player:
+                    return {"player_name": winning_player, "square_names": square_names}
+        return None
+
+    #@property
+    #def winning_player_name(self):
+    #    try:
+    #        return self.winner["player_name"]
+    #    except:
+    #        return None
+
+    #@property
+    #def winning_square_names(self):
+    #    try:
+    #        return self.winner["square_names"]
+    #    except:
+    #        return None
+
+    @property
+    def outcome(self):
+        """
+        Checks if game is over due to various conditions.
+
+        Returns an outcome object if the game has ended, otherwise None if game is still in progress.
+        """
+        winner = self.winner
+        if winner:
+            #return Outcome(winner=winner, reason=WIN_REASON)
+            player_name = winner["player_name"]
+            return {
+                "reason": WIN_REASON,
+                "message": f"{player_name} WINS!",
+                "winning_player_name": player_name,
+                "winning_square_names": winner["square_names"]
+            }
+        elif self.board.out_of_squares:
+            #return Outcome(winner=None, reason=TIE_REASON)
+            return {
+                "reason": TIE_REASON,
+                "message": "TIE GAME",
+                "winning_player_name": None,
+                "winning_square_names": None
+            }
+        else:
+            return None
+
+    #@property
+    #def status(self):
+    #    try:
+    #        return self.outcome.reason
+    #    except:
+    #        return "IN_PROGRESS"
+
 
 
 
@@ -111,4 +199,4 @@ if __name__ == "__main__":
             ("O", "B2"),
             ("X", "C1"),
         ])
-        game.outcome()
+        print(game.outcome)
