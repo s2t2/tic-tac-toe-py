@@ -2,9 +2,10 @@
 from itertools import cycle
 
 from app.board import Board
+from app.player import HumanPlayer, ComputerPlayer
 
 class Game:
-    def __init__(self, turn_history=None):
+    def __init__(self, players=None, turn_history=None):
         """Params
 
             turn_history (list) : saved game state like [
@@ -17,9 +18,8 @@ class Game:
 
         """
         self.board = Board()
-        #self.outcome = self.board.outcome
 
-        self.players = ["X", "O"]
+        self.players = players or [HumanPlayer("X"), HumanPlayer("O")]
         self.players_cycle = cycle(self.players) # BE CAREFUL OF INFINITE LOOPS
         self.active_player = None
         self.toggle_active_player() # set X as the first player
@@ -35,17 +35,17 @@ class Game:
     def take_turn(self, turn: tuple):
         """
         This is a high-level interface that increments the turn history.
-        Pass the turn param as a tuple in the form of (player_name, square_name).
+        Pass the turn param as a tuple in the form of (player_letter, square_name).
         """
-        player_name, square_name = turn
-        self.board.set_square(square_name, player_name)
+        player_letter, square_name = turn
+        self.board.set_square(square_name, player_letter)
         self.turn_history.append(turn)
         self.toggle_active_player()
 
     def take_turns(self, turns: list):
         """
         This is a high-level interface that increments the turn history.
-        Pass the turns param as a list of tuples in the form of (player_name, square_name).
+        Pass the turns param as a list of tuples in the form of (player_letter, square_name).
         """
         for turn in turns:
             self.take_turn(turn)
@@ -64,16 +64,17 @@ class Game:
         while not self.outcome:
             print(self.board)
             while True:
-                square_name = input(f"PLAYER {self.active_player} PLEASE SELECT A SQUARE (i.e. 'A1'): ").upper()
+                square_name = self.active_player.select_square(self.board)
                 try:
-                    turn = (self.active_player, square_name)
+                    turn = (self.active_player.letter, square_name)
                     self.take_turn(turn)
                     break # break out of the input loop to conclude the turn and go to the next player
                 except:
                     print(f"OOPS UNRECOGNIZED SQUARE NAME '{square_name}'. PLEASE TRY AGAIN...")
-                    next # ask the user for another input
+                    next # ask the player for another input (this is only applicable for human players)
         print(self.board)
         print(self.outcome)
+
 
 
 

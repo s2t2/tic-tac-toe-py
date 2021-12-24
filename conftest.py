@@ -38,7 +38,9 @@ X_WINS_TURNS = [
 #
 
 TIE_GAME_OUTCOME = {'message': 'TIE GAME', 'reason': 'NO_MORE_SQUARES', 'winner': None}
-X_WINS_OUTCOME = {'message': 'X WINS!', 'reason': 'THREE_IN_A_ROW', 'winner': {'player_name': 'X', 'square_names': ['A1', 'B1', 'C1']}}
+X_WINS_OUTCOME = {'message': 'X WINS!', 'reason': 'THREE_IN_A_ROW', 'winner': {
+    'letter': 'X', 'square_names': ['A1', 'B1', 'C1']}
+}
 
 
 #

@@ -10,16 +10,16 @@ def test_toggle_active_player():
     #assert game.active_player == None
 
     #game.toggle_active_player()
-    assert game.active_player == "X"
+    assert game.active_player.letter == "X"
 
     game.toggle_active_player()
-    assert game.active_player == "O"
+    assert game.active_player.letter == "O"
 
     game.toggle_active_player()
-    assert game.active_player == "X"
+    assert game.active_player.letter == "X"
 
     game.toggle_active_player()
-    assert game.active_player == "O"
+    assert game.active_player.letter == "O"
 
 
 def test_preloaded_state():
@@ -33,14 +33,14 @@ def test_preloaded_state():
     ]
     game = Game(turn_history=turn_history)
     assert game.turn_history == turn_history
-    assert game.board.get_square("A1").player_name == "X"
-    assert game.board.get_square("A2").player_name == "O"
-    assert game.board.get_square("B1").player_name == "X"
-    assert game.board.get_square("B2").player_name == None
-    assert game.board.get_square("C1").player_name == None
+    assert game.board.get_square("A1").letter == "X"
+    assert game.board.get_square("A2").letter == "O"
+    assert game.board.get_square("B1").letter == "X"
+    assert game.board.get_square("B2").letter == None
+    assert game.board.get_square("C1").letter == None
     assert game.board.winner == None
     assert game.board.outcome == None
-    assert game.active_player == "O"
+    assert game.active_player.letter == "O"
 
     # IN PROGRESS GAME ("X" PLAYER IS NEXT)
 
@@ -52,14 +52,14 @@ def test_preloaded_state():
     ]
     game = Game(turn_history=turn_history)
     assert game.turn_history == turn_history
-    assert game.board.get_square("A1").player_name == "X"
-    assert game.board.get_square("A2").player_name == "O"
-    assert game.board.get_square("B1").player_name == "X"
-    assert game.board.get_square("B2").player_name == "O"
-    assert game.board.get_square("C1").player_name == None
+    assert game.board.get_square("A1").letter == "X"
+    assert game.board.get_square("A2").letter == "O"
+    assert game.board.get_square("B1").letter == "X"
+    assert game.board.get_square("B2").letter == "O"
+    assert game.board.get_square("C1").letter == None
     assert game.board.winner == None
     assert game.board.outcome == None
-    assert game.active_player == "X"
+    assert game.active_player.letter == "X"
 
     # COMPLETED GAME (HAS WINNER AND OUTCOME)
 
@@ -72,14 +72,14 @@ def test_preloaded_state():
     ]
     game = Game(turn_history=turn_history)
     assert game.turn_history == turn_history
-    assert game.board.get_square("A1").player_name == "X"
-    assert game.board.get_square("A2").player_name == "O"
-    assert game.board.get_square("B1").player_name == "X"
-    assert game.board.get_square("B2").player_name == "O"
-    assert game.board.get_square("C1").player_name == "X"
-    assert game.winner == {'player_name': 'X', 'square_names': ['A1', 'B1', 'C1']}
-    assert game.outcome == {'message': 'X WINS!', 'reason': 'THREE_IN_A_ROW', 'winner': {'player_name': 'X', 'square_names': ['A1', 'B1', 'C1']}}
-    assert game.active_player == "O" # this will be the case, although it isn't an important / desired part of the design. could as well be null and the player cycling turned off or something.
+    assert game.board.get_square("A1").letter == "X"
+    assert game.board.get_square("A2").letter == "O"
+    assert game.board.get_square("B1").letter == "X"
+    assert game.board.get_square("B2").letter == "O"
+    assert game.board.get_square("C1").letter == "X"
+    assert game.winner == X_WINS_OUTCOME["winner"]
+    assert game.outcome == X_WINS_OUTCOME
+    assert game.active_player.letter == "O" # this will be the case, although it isn't an important / desired part of the design. could as well be null and the player cycling turned off or something.
 
 
 def test_take_turns():
@@ -98,7 +98,7 @@ def test_take_turns():
     for turn in turns:
         game.take_turn(turn)
     assert game.turn_history == turns
-    assert game.active_player == "O"
+    assert game.active_player.letter == "O"
     assert game.outcome == X_WINS_OUTCOME
 
     # TAKE TURNS
@@ -106,7 +106,7 @@ def test_take_turns():
     game = Game()
     game.take_turns(turns)
     assert game.turn_history == turns
-    assert game.active_player == "O"
+    assert game.active_player.letter == "O"
     assert game.outcome == X_WINS_OUTCOME
 
 
