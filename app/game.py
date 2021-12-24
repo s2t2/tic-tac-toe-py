@@ -87,10 +87,25 @@ if __name__ == "__main__":
 
     if APP_ENV == "development":
 
+        # PLAYER SELECTION
+
+        x_player_type = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER'):") or "HUMAN"
+        o_player_type = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER'):") or "HUMAN"
+
+        if x_player_type == "HUMAN":        x_player = HumanPlayer("X")
+        elif x_player_type == "COMPUTER":   x_player = ComputerPlayer("X")
+
+        if o_player_type == "HUMAN":        o_player = HumanPlayer("O")
+        elif o_player_type == "COMPUTER":   o_player = ComputerPlayer("O")
+
+        players = [x_player, o_player]
+
+        # PRELOAD SELECTION
+
         preload = input("Would you like to use a pre-saved game state? (Y/N): ")
         if preload.upper() == "Y":
 
-            game = Game(turn_history=[
+            game = Game(players=players, turn_history=[
                 ("X", "A1"),
                 ("O", "A2"),
                 ("X", "B1"),
@@ -100,16 +115,29 @@ if __name__ == "__main__":
 
         else:
 
-            game = Game()
+            game = Game(players=players)
             game.play()
 
     else:
 
-        game = Game(turn_history=[
-            ("X", "A1"),
-            ("O", "A2"),
-            ("X", "B1"),
-            ("O", "B2"),
-            ("X", "C1"),
+        # PRELOAD FROM SAVED STATE
+
+        #game = Game(turn_history=[
+        #    ("X", "A1"),
+        #    ("O", "A2"),
+        #    ("X", "B1"),
+        #    ("O", "B2"),
+        #    ("X", "C1"),
+        #])
+        #print(game.outcome)
+
+        #print("---------------")
+
+
+        # SIMULATE GAMEPLAY
+
+        game = Game(players=[
+            ComputerPlayer("X", strategy="RANDOM"),
+            ComputerPlayer("O", strategy="RANDOM")
         ])
-        game.outcome()
+        game.play()
