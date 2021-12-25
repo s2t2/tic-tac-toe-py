@@ -60,6 +60,14 @@ class Game:
     def winner(self):
         return self.board.winner
 
+    @property
+    def winning_letter(self):
+        return self.board.winning_letter
+
+    @property
+    def winning_square_names(self):
+        return self.board.winning_square_names
+
     def play(self):
         while not self.outcome:
             print(self.board)
@@ -89,8 +97,8 @@ if __name__ == "__main__":
 
         # PLAYER SELECTION
 
-        x_player_type = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER'):") or "HUMAN"
-        o_player_type = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER'):") or "HUMAN"
+        x_player_type = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER'): ") or "HUMAN"
+        o_player_type = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER'): ") or "HUMAN"
 
         if x_player_type == "HUMAN":        x_player = HumanPlayer("X")
         elif x_player_type == "COMPUTER":   x_player = ComputerPlayer("X")

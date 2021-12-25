@@ -76,19 +76,19 @@ class Board:
         elif self.out_of_squares:
             return {"winner": None, "reason": "NO_MORE_SQUARES", "message": "TIE GAME" }
 
-    #@property
-    #def winning_player_name(self):
-    #    try:
-    #        return self.winner["player_name"]
-    #    except:
-    #        pass
+    @property
+    def winning_letter(self):
+        try:
+            return self.winner["letter"]
+        except:
+            return None
 
-    #@property
-    #def winning_squares(self):
-    #    try:
-    #        return self.winner["square_names"]
-    #    except:
-    #        pass
+    @property
+    def winning_square_names(self):
+        try:
+            return self.winner["square_names"]
+        except:
+            return None
 
 
 
