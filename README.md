@@ -32,8 +32,9 @@ Play many games (computer vs computer), saves results to CSV file in "data" dire
 python -m app.jobs.play_games
 ```
 
-X_STRATEGY="RANDOM" O_STRATEGY="RANDOM" GAME_COUNT=100000 python -m app.jobs.play_games
-X_STRATEGY="RANDOM" O_STRATEGY="MINIMAX" GAME_COUNT=100000 python -m app.jobs.play_games
+X_STRATEGY="RANDOM" O_STRATEGY="RANDOM" GAME_COUNT=100 python -m app.jobs.play_games
+X_STRATEGY="RANDOM" O_STRATEGY="MINIMAX" GAME_COUNT=100 python -m app.jobs.play_games
+X_STRATEGY="MINIMAX" O_STRATEGY="MINIMAX" GAME_COUNT=100 python -m app.jobs.play_games
 ```
 
 

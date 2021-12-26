@@ -51,13 +51,12 @@ class ComputerPlayer(Player):
         super().__init__(name=name, letter=letter, player_type="COMPUTER")
 
     def select_square(self, board):
+        print("PLAYER", self.letter, "THINKING...")
+        return self.select_random_square(board)
+
+    def select_random_square(self, board):
         random_square = random.choice(board.selectable_squares)
         return random_square.name
-        #return select_random_square(self, board)
-
-    #def select_random_square(self, board):
-    #    random_square = random.choice(board.selectable_squares)
-    #    return random_square.name
 
 
 
@@ -92,9 +91,7 @@ class MinimaxPlayer(ComputerPlayer):
         print("PLAYER", self.letter, "THINKING...")
 
         if len(board.selectable_squares) == 9:
-            random_square = random.choice(board.selectable_squares)
-            return random_square.name
-            #return self.select_random_square(board)
+            return self.select_random_square(board)
 
         best_square = None
         best_score = -inf
