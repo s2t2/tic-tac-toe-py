@@ -20,8 +20,11 @@ def test_computer_player():
 
 
 
-def test_minimax_player_x():
+#
+# MINIMAX
+#
 
+def test_minimax_player_x():
 
     player = MinimaxPlayer(letter="X")
     board = Board()
@@ -41,9 +44,6 @@ def test_minimax_player_o():
     board.set_square("B1", "X")
     assert player.select_square(board) == "C2"
 
-
-
-
 def test_minimax_player_blocks():
 
     player = MinimaxPlayer(letter="X")
@@ -53,7 +53,6 @@ def test_minimax_player_blocks():
     board.set_square("B2", "X")
     assert player.select_square(board) == "C3"
 
-
 def test_minimax_player_o_blocks():
 
     player = MinimaxPlayer(letter="O")
@@ -62,9 +61,6 @@ def test_minimax_player_o_blocks():
     board.set_square("C1", "O")
     board.set_square("B2", "X")
     assert player.select_square(board) == "C3"
-
-
-
 
 def test_minimax_more():
 
@@ -80,17 +76,17 @@ def test_minimax_more():
     board.set_square("A3", "X")
     assert player.select_square(board) == "C1"
 
-def test_this_edge_case_though():
+def test_minimax_terminal():
 
     player = MinimaxPlayer(letter="O")
     board = Board()
     board.set_square("A1", "X")
     board.set_square("B2", "O")
     board.set_square("C1", "X")
-    assert player.select_square(board) == "B1"
+    assert player.select_square(board) == "B1" # for good measure
 
     board.set_square("B1", "O")
     board.set_square("B3", "X")
     board.set_square("A2", "O")
     board.set_square("C2", "X")
-    assert player.select_square(board) == "C3"
+    assert player.select_square(board) == "C3" # an immediately terminal condition
