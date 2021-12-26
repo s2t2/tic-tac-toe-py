@@ -87,7 +87,7 @@ def test_this_edge_case_though():
     board.set_square("A1", "X")
     board.set_square("B2", "O")
     board.set_square("C1", "X")
-    #assert player.select_square(board) == "B1"
+    assert player.select_square(board) == "B1"
 
     board.set_square("B1", "O")
     board.set_square("B3", "X")

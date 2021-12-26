@@ -106,10 +106,12 @@ class MinimaxPlayer(Player):
             #print("-"*(depth+1), "OUTCOME:", board.outcome["message"], "IN", len(board.turn_history))
             print("-"*(depth+1), "OUTCOME:", board.outcome["message"])
 
-            if board.winning_letter == self.letter:
-                return 1 * (len(board.selectable_squares)+1)
-            elif board.winning_letter != self.letter:
-                return -1 * (len(board.selectable_squares)+1)
+            if board.winner:
+                if board.winning_letter == self.letter:
+                    return 1 * (len(board.selectable_squares)+1)
+                #elif board.winning_letter != self.letter:
+                else:
+                    return -1 * (len(board.selectable_squares)+1)
             else:
                 return 0
 
