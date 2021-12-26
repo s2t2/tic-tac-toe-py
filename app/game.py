@@ -2,7 +2,7 @@
 from itertools import cycle
 
 from app.board import Board
-from app.player import HumanPlayer, ComputerPlayer
+from app.player import set_player
 
 class Game:
     def __init__(self, players=None, turn_history=None):
@@ -16,10 +16,15 @@ class Game:
                 ("X", "C1"),
             ]
 
+            players (list) with letters matching order of turn history, if provided.
+
         """
         self.board = Board()
 
-        self.players = players or [HumanPlayer("X"), HumanPlayer("O")]
+        self.players = players or [
+            set_player(letter="X", strategy="HUMAN"),
+            set_player(letter="O", strategy="HUMAN"),
+        ]
         self.players_cycle = cycle(self.players) # BE CAREFUL OF INFINITE LOOPS
         self.active_player = None
         self.toggle_active_player() # set X as the first player
@@ -92,32 +97,29 @@ class Game:
 if __name__ == "__main__":
 
     from app import APP_ENV
+    import os
 
     if APP_ENV == "development":
 
         # PLAYER SELECTION
 
-        x_player_type = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER'): ") or "HUMAN"
-        o_player_type = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER'): ") or "HUMAN"
+        x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX'): ") or "HUMAN"
+        o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX'): ") or "MINIMAX"
 
-        if x_player_type == "HUMAN":        x_player = HumanPlayer("X")
-        elif x_player_type == "COMPUTER":   x_player = ComputerPlayer("X")
-
-        if o_player_type == "HUMAN":        o_player = HumanPlayer("O")
-        elif o_player_type == "COMPUTER":   o_player = ComputerPlayer("O")
-
-        players = [x_player, o_player]
+        players = [
+            set_player(letter="X", strategy=x_strategy),
+            set_player(letter="O", strategy=o_strategy),
+        ]
 
         # PRELOAD SELECTION
 
-        preload = input("Would you like to use a pre-saved game state? (Y/N): ")
+        preload = input("Would you like to use a pre-saved game state? (Y/N): ") or "N"
         if preload.upper() == "Y":
 
             game = Game(players=players, turn_history=[
                 ("X", "A1"),
-                ("O", "A2"),
-                ("X", "B1"),
-                ("O", "B2"),
+                ("O", "B1"),
+                ("X", "B2"),
             ])
             game.play()
 
@@ -128,7 +130,6 @@ if __name__ == "__main__":
 
     else:
 
-        # PRELOAD FROM SAVED STATE
 
         #game = Game(turn_history=[
         #    ("X", "A1"),
@@ -141,11 +142,13 @@ if __name__ == "__main__":
 
         #print("---------------")
 
-
         # SIMULATE GAMEPLAY
 
+        X_STRATEGY = os.getenv("X_STRATEGY", default="RANDOM")
+        O_STRATEGY = os.getenv("O_STRATEGY", default="MINIMAX")
+
         game = Game(players=[
-            ComputerPlayer("X", strategy="RANDOM"),
-            ComputerPlayer("O", strategy="RANDOM")
+            set_player(letter="X", strategy=X_STRATEGY),
+            set_player(letter="O", strategy=O_STRATEGY),
         ])
         game.play()

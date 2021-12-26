@@ -20,20 +20,23 @@ pip install -r requirements.txt
 
 ## Usage
 
-Play a game:
+Play a game (human vs human, human vs computer, computer vs computer):
 
 ```sh
 python -m app.game
 ```
 
-Simulate many games:
+Play many games (computer vs computer), saves results to CSV file in "data" directory:
 
 ```sh
-python -m app.jobs.simulate
+python -m app.jobs.play_games
+
+
+X_STRATEGY="RANDOM" O_STRATEGY="RANDOM" GAME_COUNT=100 python -m app.jobs.play_games
+X_STRATEGY="RANDOM" O_STRATEGY="MINIMAX" GAME_COUNT=100 python -m app.jobs.play_games
+X_STRATEGY="MINIMAX" O_STRATEGY="MINIMAX" GAME_COUNT=100 python -m app.jobs.play_games
 ```
 
-X_STRATEGY="RANDOM" O_STRATEGY="RANDOM" GAME_COUNT=100000 python -m app.jobs.simulate
-```
 
 
 ## Testing
