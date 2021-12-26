@@ -1,7 +1,17 @@
 
 
 
-def set_player(strategy, letter):
+def set_player(letter, strategy):
+    """
+    This is a high-level interface into player selection.
+
+    Params :
+
+        letter (str) : "X" or "O"
+
+        strategy (str) : what kind of player to create
+
+    """
     if strategy == "HUMAN":
         return HumanPlayer(letter)
     elif strategy in ["RANDOM", "COMPUTER", "EASY"]:

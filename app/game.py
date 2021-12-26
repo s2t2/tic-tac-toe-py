@@ -16,6 +16,8 @@ class Game:
                 ("X", "C1"),
             ]
 
+            players (list) with letters matching order of turn history, if provided.
+
         """
         self.board = Board()
 
