@@ -3,6 +3,8 @@
 from app.board import Board
 from app.square import Square
 
+from conftest import X_WINS_OUTCOME
+
 def test_board():
     board = Board()
 
@@ -29,18 +31,24 @@ def test_square_selection():
 def test_winner_determination():
     board = Board()
     assert board.winner == None
+    assert board.outcome == None
 
     board.set_square("A1", "X")
     assert board.winner == None
+    assert board.outcome == None
 
     board.set_square("A2", "O")
     assert board.winner == None
+    assert board.outcome == None
 
     board.set_square("B1", "X")
     assert board.winner == None
+    assert board.outcome == None
 
     board.set_square("B2", "O")
     assert board.winner == None
+    assert board.outcome == None
 
     board.set_square("C1", "X")
-    assert board.winner["player_name"] == "X"
+    assert board.winner == X_WINS_OUTCOME["winner"]
+    assert board.outcome == X_WINS_OUTCOME
