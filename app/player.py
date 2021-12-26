@@ -33,3 +33,116 @@ class ComputerPlayer(Player):
 
         random_square = random.choice(board.selectable_squares)
         return random_square.name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import copy
+from math import inf
+
+OPPOSITE_LETTER = {"X": "O", "O": "X"} # todo: make more dynamic
+
+class MinimaxPlayer(Player):
+    # https://www.youtube.com/watch?v=J1GoI5WHBto
+    # https://www.youtube.com/watch?v=STjW3eH0Cik
+
+    def __init__(self, letter, name=None):
+        super().__init__(name=name, letter=letter, player_type="COMPUTER")
+
+    def select_square(self, board):
+        best_square = None
+        best_score = -inf
+        for square in board.selectable_squares:
+            # make a new board (so the original isn't affected)
+            new_board = copy.deepcopy(board)
+
+            # simulate a move on the game board
+            new_board.set_square(square.name, self.letter)
+
+            # get a value for this move
+            score = self.minimax(new_board, maximizing=True)
+
+            # update best scorer, and keep track of which square is best
+            if score > best_score:
+                best_score = score
+                best_square = square
+
+        return best_square
+
+
+
+
+
+
+    def minimax(self, board, depth=0, maximizing=True):
+
+        #print(board)
+
+        if board.outcome:
+            print("DEPTH", depth, "OUTCOME:", board.outcome["message"])
+
+            if board.winning_letter == self.letter:
+                return 100 * depth+1
+            elif board.winning_letter != self.letter:
+                return -100 * depth+1
+            else:
+                return 0
+
+        #print("DEPTH", depth, "NO OUTCOME")
+
+        if maximizing == True:
+            letter = self.letter
+            #print(f"MAXIMIZING ({letter})...")
+
+            best_score = -inf
+            for square in board.selectable_squares:
+                # make a new board (so the original isn't affected)
+                new_board = copy.deepcopy(board)
+
+                # simulate a move on the game board
+                new_board.set_square(square.name, letter)
+
+                # get a value for this move
+                score = self.minimax(new_board, depth=depth+1, maximizing=False)
+
+                # keep track of best score
+                best_score = max(score, best_score)
+
+                print("...", depth, letter, square.name, score)
+
+            return best_score
+
+        else:
+            letter = OPPOSITE_LETTER[self.letter]
+            #print(f"MINIMIZING ({letter})...", )
+
+            best_score = inf
+            for square in board.selectable_squares:
+                # make a new board (so the original isn't affected)
+                new_board = copy.deepcopy(board)
+
+                # simulate a move on the game board
+                new_board.set_square(square.name, letter)
+
+                # get a value for this move
+                score = self.minimax(new_board, depth=depth+1, maximizing=True)
+
+                # keep track of best score
+                best_score = min(score, best_score)
+
+                print("...", depth, letter, square.name, score)
+
+            return best_score

@@ -2,7 +2,7 @@
 from itertools import cycle
 
 from app.board import Board
-from app.player import HumanPlayer, ComputerPlayer
+from app.player import HumanPlayer, ComputerPlayer, MinimaxPlayer
 
 class Game:
     def __init__(self, players=None, turn_history=None):
@@ -97,14 +97,16 @@ if __name__ == "__main__":
 
         # PLAYER SELECTION
 
-        x_player_type = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER'): ") or "HUMAN"
-        o_player_type = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER'): ") or "HUMAN"
+        x_player_type = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER / MINIMAX'): ") or "HUMAN"
+        o_player_type = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER / MINIMAX'): ") or "MINIMAX"
 
         if x_player_type == "HUMAN":        x_player = HumanPlayer("X")
         elif x_player_type == "COMPUTER":   x_player = ComputerPlayer("X")
+        elif x_player_type == "MINIMAX":   x_player = MinimaxPlayer("X")
 
         if o_player_type == "HUMAN":        o_player = HumanPlayer("O")
         elif o_player_type == "COMPUTER":   o_player = ComputerPlayer("O")
+        elif o_player_type == "MINIMAX":   o_player = MinimaxPlayer("O")
 
         players = [x_player, o_player]
 
@@ -117,7 +119,7 @@ if __name__ == "__main__":
                 ("X", "A1"),
                 ("O", "A2"),
                 ("X", "B1"),
-                ("O", "B2"),
+                #("O", "B2"),
             ])
             game.play()
 
