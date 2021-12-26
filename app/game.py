@@ -112,14 +112,13 @@ if __name__ == "__main__":
 
         # PRELOAD SELECTION
 
-        preload = input("Would you like to use a pre-saved game state? (Y/N): ")
+        preload = input("Would you like to use a pre-saved game state? (Y/N): ") or "N"
         if preload.upper() == "Y":
 
             game = Game(players=players, turn_history=[
                 ("X", "A1"),
-                ("O", "A2"),
-                ("X", "B1"),
-                #("O", "B2"),
+                ("O", "B1"),
+                ("X", "B2"),
             ])
             game.play()
 

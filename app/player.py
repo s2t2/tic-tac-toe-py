@@ -85,7 +85,7 @@ class MinimaxPlayer(Player):
                 best_score = score
                 best_square = square
 
-        return best_square
+        return best_square.name
 
 
 
