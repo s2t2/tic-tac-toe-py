@@ -73,7 +73,7 @@ class MinimaxPlayer(Player):
             new_board.set_square(square.name, self.letter)
 
             # get a value for this move
-            score = self.minimax(new_board, maximizing=True)
+            score = self.minimax(new_board, maximizing=False) # after setting the square ourselves, we allow the opposing player to take the next turn
 
             # update best scorer, and keep track of which square is best
             if score > best_score:
@@ -91,13 +91,15 @@ class MinimaxPlayer(Player):
 
         #print(board)
 
+        #print("-"*(depth+1))
+
         if board.outcome:
-            print("DEPTH", depth, "OUTCOME:", board.outcome["message"])
+            print("-"*(depth+1), "OUTCOME:", board.outcome["message"], "in", depth)
 
             if board.winning_letter == self.letter:
-                return 100 * depth+1
+                return 1 #* depth+1
             elif board.winning_letter != self.letter:
-                return -100 * depth+1
+                return -1 #* depth+1
             else:
                 return 0
 
@@ -105,7 +107,6 @@ class MinimaxPlayer(Player):
 
         if maximizing == True:
             letter = self.letter
-            #print(f"MAXIMIZING ({letter})...")
 
             best_score = -inf
             for square in board.selectable_squares:
@@ -114,6 +115,7 @@ class MinimaxPlayer(Player):
 
                 # simulate a move on the game board
                 new_board.set_square(square.name, letter)
+                print("-"*(depth+1), depth, letter, square.name)
 
                 # get a value for this move
                 score = self.minimax(new_board, depth=depth+1, maximizing=False)
@@ -121,13 +123,10 @@ class MinimaxPlayer(Player):
                 # keep track of best score
                 best_score = max(score, best_score)
 
-                print("...", depth, letter, square.name, score)
-
             return best_score
 
         else:
             letter = OPPOSITE_LETTER[self.letter]
-            #print(f"MINIMIZING ({letter})...", )
 
             best_score = inf
             for square in board.selectable_squares:
@@ -136,13 +135,12 @@ class MinimaxPlayer(Player):
 
                 # simulate a move on the game board
                 new_board.set_square(square.name, letter)
+                print("-"*(depth+1), depth, letter, square.name)
 
                 # get a value for this move
                 score = self.minimax(new_board, depth=depth+1, maximizing=True)
 
                 # keep track of best score
                 best_score = min(score, best_score)
-
-                print("...", depth, letter, square.name, score)
 
             return best_score
