@@ -1,6 +1,16 @@
 
 
-import random
+
+def set_player(strategy, letter):
+    if strategy == "HUMAN":
+        return HumanPlayer(letter)
+    elif strategy in ["RANDOM", "COMPUTER", "EASY"]:
+        return ComputerPlayer(letter)
+    elif strategy in ["MINIMAX", "HARD"]:
+        return MinimaxPlayer(letter)
+
+
+
 
 class Player:
     def __init__(self, letter, name=None, player_type=None):
@@ -12,6 +22,7 @@ class Player:
         raise NotImplementedError("Implement this method. It should optionally accept a board object. And return the name of the square as a string.")
 
 
+
 class HumanPlayer(Player):
     def __init__(self, letter, name=None):
         super().__init__(name=name, letter=letter, player_type="HUMAN")
@@ -19,6 +30,10 @@ class HumanPlayer(Player):
     def select_square(self, board=None):
         return input(f"PLAYER {self.letter} PLEASE SELECT A SQUARE (i.e. 'A1'): ").upper()
 
+
+
+
+import random
 
 class ComputerPlayer(Player):
     def __init__(self, letter, name=None, strategy="RANDOM"):
@@ -28,6 +43,11 @@ class ComputerPlayer(Player):
     def select_square(self, board):
         random_square = random.choice(board.selectable_squares)
         return random_square.name
+        #return select_random_square(self, board)
+
+    #def select_random_square(self, board):
+    #    random_square = random.choice(board.selectable_squares)
+    #    return random_square.name
 
 
 
@@ -48,7 +68,7 @@ class ComputerPlayer(Player):
 import copy
 from math import inf
 
-OPPOSITE_LETTER = {"X": "O", "O": "X"} # todo: make more dynamic
+OPPOSITE_LETTER = {"X": "O", "O": "X"}
 
 class MinimaxPlayer(ComputerPlayer):
     # https://www.youtube.com/watch?v=J1GoI5WHBto
@@ -64,6 +84,7 @@ class MinimaxPlayer(ComputerPlayer):
         if len(board.selectable_squares) == 9:
             random_square = random.choice(board.selectable_squares)
             return random_square.name
+            #return self.select_random_square(board)
 
         best_square = None
         best_score = -inf

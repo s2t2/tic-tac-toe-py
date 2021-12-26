@@ -33,6 +33,7 @@ python -m app.jobs.play_games
 ```
 
 X_STRATEGY="RANDOM" O_STRATEGY="RANDOM" GAME_COUNT=100000 python -m app.jobs.play_games
+X_STRATEGY="RANDOM" O_STRATEGY="MINIMAX" GAME_COUNT=100000 python -m app.jobs.play_games
 ```
 
 
