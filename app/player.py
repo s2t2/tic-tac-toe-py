@@ -58,11 +58,16 @@ OPPOSITE_LETTER = {"X": "O", "O": "X"} # todo: make more dynamic
 class MinimaxPlayer(Player):
     # https://www.youtube.com/watch?v=J1GoI5WHBto
     # https://www.youtube.com/watch?v=STjW3eH0Cik
+    # https://www.youtube.com/watch?v=fT3YWCKvuQE
 
     def __init__(self, letter, name=None):
         super().__init__(name=name, letter=letter, player_type="COMPUTER")
 
     def select_square(self, board):
+        if len(board.selectable_squares) == 9:
+            random_square = random.choice(board.selectable_squares)
+            return random_square.name
+
         best_square = None
         best_score = -inf
         for square in board.selectable_squares:
@@ -73,7 +78,7 @@ class MinimaxPlayer(Player):
             new_board.set_square(square.name, self.letter)
 
             # get a value for this move
-            score = self.minimax(new_board, maximizing=False) # after setting the square ourselves, we allow the opposing player to take the next turn
+            score = self.minimax(new_board, depth=0, maximizing=False) # after setting the square ourselves, we allow the opposing player to take the next turn
 
             # update best scorer, and keep track of which square is best
             if score > best_score:
@@ -89,24 +94,25 @@ class MinimaxPlayer(Player):
 
     def minimax(self, board, depth=0, maximizing=True):
 
+        if maximizing == True:
+            letter = self.letter
+        else:
+            letter = OPPOSITE_LETTER[self.letter]
         #print(board)
 
         #print("-"*(depth+1))
 
         if board.outcome:
-            print("-"*(depth+1), "OUTCOME:", board.outcome["message"], "in", depth)
+            #print("-"*(depth+1), "OUTCOME:", board.outcome["message"], "IN", depth)
 
-            if board.winning_letter == self.letter:
-                return 1 #* depth+1
-            elif board.winning_letter != self.letter:
-                return -1 #* depth+1
+            if board.winning_letter == letter:
+                return 1 * (depth+1)
+            elif board.winning_letter != letter:
+                return -1 * (depth+1)
             else:
                 return 0
 
-        #print("DEPTH", depth, "NO OUTCOME")
-
         if maximizing == True:
-            letter = self.letter
 
             best_score = -inf
             for square in board.selectable_squares:
@@ -115,7 +121,7 @@ class MinimaxPlayer(Player):
 
                 # simulate a move on the game board
                 new_board.set_square(square.name, letter)
-                print("-"*(depth+1), depth, letter, square.name)
+                #print("-"*(depth+1), letter, square.name)
 
                 # get a value for this move
                 score = self.minimax(new_board, depth=depth+1, maximizing=False)
@@ -126,7 +132,6 @@ class MinimaxPlayer(Player):
             return best_score
 
         else:
-            letter = OPPOSITE_LETTER[self.letter]
 
             best_score = inf
             for square in board.selectable_squares:
@@ -135,7 +140,8 @@ class MinimaxPlayer(Player):
 
                 # simulate a move on the game board
                 new_board.set_square(square.name, letter)
-                print("-"*(depth+1), depth, letter, square.name)
+                #print("-"*(depth+1), letter, square.name)
+                #print("-"*(depth+1), letter, square.name)
 
                 # get a value for this move
                 score = self.minimax(new_board, depth=depth+1, maximizing=True)
