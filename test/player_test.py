@@ -53,9 +53,44 @@ def test_minimax_player_blocks():
     board.set_square("B2", "X")
     assert player.select_square(board) == "C3"
 
-    player = MinimaxPlayer(name="Minnie", letter="O")
+
+def test_minimax_player_o_blocks():
+
+    player = MinimaxPlayer(letter="O")
     board = Board()
     board.set_square("A1", "X")
     board.set_square("C1", "O")
     board.set_square("B2", "X")
+    assert player.select_square(board) == "C3"
+
+
+
+
+def test_minimax_more():
+
+    player = MinimaxPlayer(letter="O")
+    board = Board()
+    board.set_square("C2", "O")
+    board.set_square("B1", "X")
+    board.set_square("A2", "O")
+    board.set_square("B2", "X")
+    assert player.select_square(board) == "B3"
+
+    board.set_square("B3", "0")
+    board.set_square("A3", "X")
+    assert player.select_square(board) == "C1"
+
+def test_this_edge_case_though():
+
+    player = MinimaxPlayer(letter="O")
+    board = Board()
+    board.set_square("A1", "X")
+    board.set_square("B2", "O")
+    board.set_square("C1", "X")
+    #assert player.select_square(board) == "B1"
+
+    board.set_square("B1", "O")
+    board.set_square("B3", "X")
+    board.set_square("A2", "O")
+    board.set_square("C2", "X")
     assert player.select_square(board) == "C3"
