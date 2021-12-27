@@ -28,7 +28,7 @@ class Player:
     def __init__(self, letter, name=None, player_type=None):
         self.letter = str(letter)[0].upper() # like "X" or "O"
         self.name = name or f"Player {self.letter}" # like "Player X"
-        self.player_type = player_type # "HUMAN" or "COMPUTER"
+        self.player_type = player_type # "HUMAN", "COMPUTER", etc.
 
     def select_square(self, board=None):
         raise NotImplementedError("Implement this method. It should optionally accept a board object. And return the name of the square as a string.")
@@ -48,8 +48,9 @@ class HumanPlayer(Player):
 import random
 
 class ComputerPlayer(Player):
-    def __init__(self, letter, name=None):
-        super().__init__(name=name, letter=letter, player_type="COMPUTER")
+    def __init__(self, letter, name=None, player_type=None):
+        player_type = player_type or "RANDOM"
+        super().__init__(name=name, letter=letter, player_type=player_type)
 
     def select_square(self, board):
         print("PLAYER", self.letter, "THINKING...")
@@ -85,8 +86,9 @@ class MinimaxPlayer(ComputerPlayer):
     # https://www.youtube.com/watch?v=STjW3eH0Cik
     # https://www.youtube.com/watch?v=fT3YWCKvuQE
 
-    def __init__(self, letter, name=None):
-        super().__init__(name=name, letter=letter)
+    def __init__(self, letter, name=None, player_type=None):
+        player_type = player_type or "MINIMAX"
+        super().__init__(name=name, letter=letter, player_type=player_type)
 
     def select_square(self, board):
         print("PLAYER", self.letter, "THINKING...")
@@ -227,9 +229,9 @@ class MinimaxABPlayer(MinimaxPlayer):
     # https://stackabuse.com/minimax-and-alpha-beta-pruning-in-python/
     # https://github.com/KruZZy/tic-tac-toe/blob/master/ai.py
 
-    def __init__(self, letter, name=None, max_depth=None):
-        #self.max_depth = max_depth or 10 # number of levels deep to search)
-        super().__init__(name=name, letter=letter)
+    def __init__(self, letter, name=None, player_type=None):
+        player_type = player_type or "MINIMAX-AB"
+        super().__init__(name=name, letter=letter, player_type=player_type)
 
 
     def minimax(self, board, depth=0, maximizing=True, alpha=None, beta=None):

@@ -15,7 +15,39 @@ GAME_COUNT = int(os.getenv("GAME_COUNT", default="100_000"))
 #BATCH_SIZE = int(os.getenv("BATCH_SIZE", default="1_000")
 
 
+import time
+
+class Job:
+    def __init__(self):
+       self.start_at = None
+       self.end_at = None
+
+    def start(self):
+        self.start_at = time.perf_counter()
+
+    def end(self):
+        self.end_at = time.perf_counter()
+
+
+    @property
+    def duration_seconds(self):
+        try:
+            return self.end_at - self.start_at
+        except:
+            return None
+
+    @property
+    def duration_mins(self):
+        try:
+            return self.duration_seconds / 60
+        except:
+            return None
+
+
 if __name__ == "__main__":
+
+    job = Job()
+    job.start()
 
     #games = []
     records = []
@@ -39,8 +71,10 @@ if __name__ == "__main__":
             #"turn_history": ",".join(game.winning_square_names),
         })
 
+    job.end()
     print("------------------------")
-    print("PLAYED", len(records), "GAMES!")
+    print("PLAYED", len(records), "GAMES!", f"... (IN {job.duration_seconds} SECONDS)")
+
 
     df = DataFrame(records)
 
@@ -54,7 +88,7 @@ if __name__ == "__main__":
     print("------------------------")
     print("SAVING DATA TO FILE...")
 
-    csv_filename = f"{game.players[0].letter}_{game.players[0].strategy}_vs_{game.players[1].letter}_{game.players[1].strategy}.csv".lower()
+    csv_filename = f"{game.players[0].letter}_{game.players[0].player_type}_vs_{game.players[1].letter}_{game.players[1].player_type}.csv".lower()
     csv_filepath = os.path.join(os.path.dirname(__file__), "..", "..", "data", csv_filename)
     df.to_csv(csv_filepath)
     print(os.path.abspath(csv_filepath))
