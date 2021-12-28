@@ -24,97 +24,93 @@ def test_computer_player():
 # MINIMAX
 #
 
+
+def setup_minimax_players(letter):
+    return [
+        MinimaxPlayer(letter=letter),
+        MinimaxABPlayer(letter=letter),
+    ]
+
+
+
+
+
+
+
 def test_minimax_player_x():
 
-    player = MinimaxPlayer(letter="X")
-    board = Board()
-    board.set_square("A1", "X")
-    board.set_square("A2", "O")
-    board.set_square("B1", "X")
-    board.set_square("B2", "O")
-    assert player.select_square(board) == "C1"
+    for player in setup_minimax_players("X"):
+
+        board = Board()
+        board.set_square("A1", "X")
+        board.set_square("A2", "O")
+        board.set_square("B1", "X")
+        board.set_square("B2", "O")
+        assert player.select_square(board) == "C1"
+
 
 def test_minimax_player_o():
 
-    player = MinimaxPlayer(letter="O")
-    board = Board()
-    board.set_square("A2", "O")
-    board.set_square("A1", "X")
-    board.set_square("B2", "O")
-    board.set_square("B1", "X")
-    assert player.select_square(board) == "C2"
+    for player in setup_minimax_players("O"):
+
+        board = Board()
+        board.set_square("A2", "O")
+        board.set_square("A1", "X")
+        board.set_square("B2", "O")
+        board.set_square("B1", "X")
+        assert player.select_square(board) == "C2"
+
 
 def test_minimax_player_blocks():
 
-    player = MinimaxPlayer(letter="X")
-    board = Board()
-    board.set_square("A1", "X")
-    board.set_square("B1", "O")
-    board.set_square("B2", "X")
-    assert player.select_square(board) == "C3"
+    for player in setup_minimax_players("O"):
+
+        board = Board()
+        board.set_square("A1", "X")
+        board.set_square("B1", "O")
+        board.set_square("B2", "X")
+        assert player.select_square(board) == "C3"
+
 
 def test_minimax_player_o_blocks():
 
-    player = MinimaxPlayer(letter="O")
-    board = Board()
-    board.set_square("A1", "X")
-    board.set_square("C1", "O")
-    board.set_square("B2", "X")
-    assert player.select_square(board) == "C3"
+    for player in setup_minimax_players("O"):
+
+        board = Board()
+        board.set_square("A1", "X")
+        board.set_square("C1", "O")
+        board.set_square("B2", "X")
+        assert player.select_square(board) == "C3"
+
 
 def test_minimax_more():
 
-    player = MinimaxPlayer(letter="O")
-    board = Board()
-    board.set_square("C2", "O")
-    board.set_square("B1", "X")
-    board.set_square("A2", "O")
-    board.set_square("B2", "X")
-    assert player.select_square(board) == "B3"
+    for player in setup_minimax_players("O"):
 
-    board.set_square("B3", "0")
-    board.set_square("A3", "X")
-    assert player.select_square(board) == "C1"
+        board = Board()
+        board.set_square("C2", "O")
+        board.set_square("B1", "X")
+        board.set_square("A2", "O")
+        board.set_square("B2", "X")
+        assert player.select_square(board) == "B3"
+
+        board.set_square("B3", "0")
+        board.set_square("A3", "X")
+        assert player.select_square(board) == "C1"
+
 
 def test_minimax_terminal():
 
-    player = MinimaxPlayer(letter="O")
-    board = Board()
-    board.set_square("A1", "X")
-    board.set_square("B2", "O")
-    board.set_square("C1", "X")
-    assert player.select_square(board) == "B1" # for good measure
+    for player in setup_minimax_players("O"):
 
-    board.set_square("B1", "O")
-    board.set_square("B3", "X")
-    board.set_square("A2", "O")
-    board.set_square("C2", "X")
-    assert player.select_square(board) == "C3" # an immediately terminal condition
+        board = Board()
+        board.set_square("A1", "X")
+        board.set_square("B2", "O")
+        board.set_square("C1", "X")
+        assert player.select_square(board) == "B1" # for good measure
 
-
-
-
-
-
-
-
-
-
-
-
-# TODO: refactor this and other minimax tests, for use on both player classes
-# ... OR change the computer player interface to use strategies
-def test_minimax_ab_terminal():
-
-    player = MinimaxABPlayer(letter="O")
-    board = Board()
-    board.set_square("A1", "X")
-    board.set_square("B2", "O")
-    board.set_square("C1", "X")
-    assert player.select_square(board) == "B1" # for good measure
-
-    board.set_square("B1", "O")
-    board.set_square("B3", "X")
-    board.set_square("A2", "O")
-    board.set_square("C2", "X")
-    assert player.select_square(board) == "C3" # an immediately terminal condition
+        board.set_square("B1", "O")
+        board.set_square("B3", "X")
+        board.set_square("A2", "O")
+        board.set_square("C2", "X")
+        assert player.select_square(board) == "C3" # an immediately terminal condition
