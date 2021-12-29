@@ -6,7 +6,7 @@ import os
 from pandas import DataFrame
 
 from app.game import Game
-from app.player import set_player
+from app.player import select_player
 
 X_STRATEGY = os.getenv("X_STRATEGY", default="RANDOM")
 O_STRATEGY = os.getenv("O_STRATEGY", default="RANDOM")
@@ -53,8 +53,8 @@ if __name__ == "__main__":
     records = []
     for counter in range(0, GAME_COUNT):
         game = Game(players=[
-            set_player(letter="X", strategy=X_STRATEGY),
-            set_player(letter="O", strategy=O_STRATEGY),
+            select_player(letter="X", strategy=X_STRATEGY),
+            select_player(letter="O", strategy=O_STRATEGY),
         ])
 
         game.play()

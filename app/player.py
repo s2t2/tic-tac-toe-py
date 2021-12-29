@@ -1,7 +1,7 @@
 
 
 
-def set_player(letter, strategy):
+def select_player(letter, strategy):
     """
     This is a high-level interface into player selection.
 
