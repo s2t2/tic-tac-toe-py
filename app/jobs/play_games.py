@@ -90,7 +90,7 @@ if __name__ == "__main__":
 
     csv_filename = f"{game.players[0].letter}_{game.players[0].player_type}_vs_{game.players[1].letter}_{game.players[1].player_type}.csv".lower()
     csv_filepath = os.path.join(os.path.dirname(__file__), "..", "..", "data", csv_filename)
-    df.to_csv(csv_filepath)
+    df.to_csv(csv_filepath, index=False)
     print(os.path.abspath(csv_filepath))
 
     #breakpoint()
