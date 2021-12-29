@@ -2,7 +2,7 @@
 from itertools import cycle
 
 from app.board import Board
-from app.player import set_player
+from app.player import select_player
 
 class Game:
     def __init__(self, players=None, turn_history=None):
@@ -22,8 +22,8 @@ class Game:
         self.board = Board()
 
         self.players = players or [
-            set_player(letter="X", strategy="HUMAN"),
-            set_player(letter="O", strategy="HUMAN"),
+            select_player(letter="X", strategy="HUMAN"),
+            select_player(letter="O", strategy="HUMAN"),
         ]
         self.players_cycle = cycle(self.players) # BE CAREFUL OF INFINITE LOOPS
         self.active_player = None
@@ -103,12 +103,12 @@ if __name__ == "__main__":
 
         # PLAYER SELECTION
 
-        x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX'): ") or "HUMAN"
-        o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX'): ") or "MINIMAX"
+        x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX' / 'MINIMAX-AB'): ") or "HUMAN"
+        o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX' / 'MINIMAX-AB'): ") or "MINIMAX-AB"
 
         players = [
-            set_player(letter="X", strategy=x_strategy),
-            set_player(letter="O", strategy=o_strategy),
+            select_player(letter="X", strategy=x_strategy),
+            select_player(letter="O", strategy=o_strategy),
         ]
 
         # PRELOAD SELECTION
@@ -148,7 +148,7 @@ if __name__ == "__main__":
         O_STRATEGY = os.getenv("O_STRATEGY", default="MINIMAX")
 
         game = Game(players=[
-            set_player(letter="X", strategy=X_STRATEGY),
-            set_player(letter="O", strategy=O_STRATEGY),
+            select_player(letter="X", strategy=X_STRATEGY),
+            select_player(letter="O", strategy=O_STRATEGY),
         ])
         game.play()

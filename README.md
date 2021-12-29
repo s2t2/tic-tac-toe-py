@@ -38,8 +38,10 @@ python -m app.jobs.play_games
 
 
 X_STRATEGY="RANDOM" O_STRATEGY="RANDOM" GAME_COUNT=100 python -m app.jobs.play_games
-X_STRATEGY="RANDOM" O_STRATEGY="MINIMAX" GAME_COUNT=100 python -m app.jobs.play_games
 X_STRATEGY="MINIMAX" O_STRATEGY="MINIMAX" GAME_COUNT=100 python -m app.jobs.play_games
+
+X_STRATEGY="RANDOM" O_STRATEGY="MINIMAX" GAME_COUNT=100 python -m app.jobs.play_games
+X_STRATEGY="RANDOM" O_STRATEGY="MINIMAX-AB" GAME_COUNT=100 python -m app.jobs.play_games
 ```
 
 
