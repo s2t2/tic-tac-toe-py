@@ -103,8 +103,8 @@ if __name__ == "__main__":
 
         # PLAYER SELECTION
 
-        x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX'): ") or "HUMAN"
-        o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX'): ") or "MINIMAX-AB"
+        x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX' / 'MINIMAX-AB'): ") or "HUMAN"
+        o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX' / 'MINIMAX-AB'): ") or "MINIMAX-AB"
 
         players = [
             set_player(letter="X", strategy=x_strategy),
