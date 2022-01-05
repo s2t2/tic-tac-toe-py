@@ -1,6 +1,5 @@
 
 
-
 def select_player(letter, strategy):
     """
     This is a high-level interface into player selection.
@@ -14,11 +13,11 @@ def select_player(letter, strategy):
     """
     if strategy == "HUMAN":
         return HumanPlayer(letter)
-    elif strategy in ["RANDOM", "COMPUTER", "EASY"]:
+    elif strategy in ["RANDOM", "COMPUTER", "EASY", "COMPUTER-EASY"]:
         return ComputerPlayer(letter)
-    elif strategy in ["MINIMAX"]:
+    elif strategy in ["MINIMAX", "HARD", "COMPUTER-HARD"]: # it is more fun for humans to play against a slower computer player
         return MinimaxPlayer(letter)
-    elif strategy in ["MINIMAX-AB", "FAST", "HARD"]:
+    elif strategy in ["MINIMAX-AB"]:
         return MinimaxABPlayer(letter)
 
 

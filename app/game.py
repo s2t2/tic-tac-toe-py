@@ -103,8 +103,8 @@ if __name__ == "__main__":
 
         # PLAYER SELECTION
 
-        x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX' / 'MINIMAX-AB'): ") or "HUMAN"
-        o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX' / 'MINIMAX-AB'): ") or "MINIMAX-AB"
+        x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): ") or "HUMAN"
+        o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): ") or "COMPUTER-HARD"
 
         players = [
             select_player(letter="X", strategy=x_strategy),
@@ -145,7 +145,7 @@ if __name__ == "__main__":
         # SIMULATE GAMEPLAY
 
         X_STRATEGY = os.getenv("X_STRATEGY", default="RANDOM")
-        O_STRATEGY = os.getenv("O_STRATEGY", default="MINIMAX")
+        O_STRATEGY = os.getenv("O_STRATEGY", default="COMPUTER-HARD")
 
         game = Game(players=[
             select_player(letter="X", strategy=X_STRATEGY),
