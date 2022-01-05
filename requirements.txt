@@ -1,8 +1,23 @@
 
+# this is the "requirements.txt" file!
+#
+# main purposes of the "requirements.txt" file:
+#
+#  1) signals to humans and computers / servers alike that "there is a python app in this repo"
+#  2) helps facilitate the installation of third-party packages our program requires (usually via a pip installation step)
+#  3) aids in other people's ability to setup our programs (prevents errors related to ininstalled packages)
+#
+# how to use the requirements.txt file?
+#
+#  1) we write the names of all third-party packages our program requires in order to work properly, each on their own line, and make sure the file is saved
+#  2) then we return to the command-line and run: `pip install -r requirements.txt` from the repo's root directory, to install the listed packages
 
 
-
+# the "pytest" package helps us run automated tests
+# see: https://pypi.org/project/pytest/
 pytest
 
 
+# the "pandas" package helps with data processing and interfacing with CSV files
+# see: https://pypi.org/project/pandas/
 pandas

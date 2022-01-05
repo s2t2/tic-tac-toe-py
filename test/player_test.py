@@ -1,10 +1,56 @@
 
-# todo: test
 
 
-from app.player import ComputerPlayer, MinimaxPlayer, MinimaxABPlayer
+import pytest
+
+from app.player import ComputerPlayer, MinimaxPlayer, MinimaxABPlayer, select_player, HumanPlayer, PlayerSelectionError
 from app.board import Board
 #from app.game import Game
+
+
+
+#
+# PLAYER SELECTION
+#
+
+def test_player_selection():
+
+    # HUMAN PLAYER
+
+    player = select_player(letter="X", strategy="HUMAN")
+    assert isinstance(player, HumanPlayer)
+    assert player.letter == "X"
+
+    # RANDOM COMPUTER PLAYER
+
+    for strategy in ["COMPUTER", "RANDOM", "COMPUTER-EASY"]:
+        player = select_player(letter="X", strategy=strategy)
+        assert isinstance(player, ComputerPlayer)
+        assert player.letter == "X"
+
+    # HARD COMPUTER PLAYER
+
+    for strategy in ["MINIMAX", "COMPUTER-HARD"]:
+        player = select_player(letter="X", strategy=strategy)
+        assert isinstance(player, MinimaxPlayer)
+        assert player.letter == "X"
+
+    # FASTER HARD COMPUTER PLAYER
+
+    player = select_player(letter="X", strategy="MINIMAX-AB")
+    assert isinstance(player, MinimaxABPlayer)
+    assert player.letter == "X"
+
+    # OOPS
+
+    with pytest.raises(PlayerSelectionError) as err:
+        # we expect this code will raise an error
+        select_player(letter="X", strategy="OOPS")
+
+
+#
+# RANDOM COMPUTER PLAYER
+#
 
 def test_computer_player():
 
@@ -21,21 +67,16 @@ def test_computer_player():
 
 
 #
-# MINIMAX
+# MINIMAX COMPUTER PLAYER
 #
-
+# ... we want to test both types of minimax player the same way (their only difference is speed)
+#
 
 def setup_minimax_players(letter):
     return [
         MinimaxPlayer(letter=letter),
         MinimaxABPlayer(letter=letter),
     ]
-
-
-
-
-
-
 
 def test_minimax_player_x():
 
