@@ -11,6 +11,14 @@ An adversarial game.
 
 ## Setup
 
+Optionally fork this [remote repository](https://github.com/s2t2/tic-tac-toe-py), to create a copy under your own control. Then "clone" or download the remote repository (or your forked copy) onto your local computer, for example to your Desktop. Then navigate to wherever you downloaded the repo:
+
+```sh
+cd ~/Desktop/tic-tac-toe-py
+```
+
+> NOTE: all subsequent commands assume you will be running them from the local repo's root directory
+
 Create a virtual environment (first time only):
 
 ```sh
@@ -28,6 +36,8 @@ Install package dependencies within the virtual environment (first time only):
 ```sh
 pip install -r requirements.txt
 ```
+
+> NOTE: if this command throws an error like "Could not open requirements file: [Errno 2] No such file or directory", make sure you are running it from the repository's root directory, where the requirements.txt file exists (see the initial `cd` step above).
 
 ## Usage
 
@@ -54,9 +64,12 @@ python -m app.jobs.play_games
 X_STRATEGY="COMPUTER-HARD" O_STRATEGY="COMPUTER-EASY" GAME_COUNT=100 python -m app.jobs.play_games
 ```
 
+> NOTE: if you see an error like "ModuleNotFoundError: No module named '...'", it's because the given package isn't installed, so run the `pip` command above to ensure that package has been installed into the virtual environment.
 
 
 ## Testing
+
+Run automated tests, to know whether the app is working as expected:
 
 ```sh
 pytest
