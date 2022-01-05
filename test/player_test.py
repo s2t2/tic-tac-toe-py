@@ -1,10 +1,44 @@
 
-# todo: test
 
 
-from app.player import ComputerPlayer, MinimaxPlayer, MinimaxABPlayer
+import pytest
+
+from app.player import ComputerPlayer, MinimaxPlayer, MinimaxABPlayer, select_player, HumanPlayer, PlayerSelectionError
 from app.board import Board
 #from app.game import Game
+
+
+
+#
+# PLAYER SELECTION
+#
+
+def test_player_selection():
+    player = select_player(letter="X", strategy="HUMAN")
+    assert isinstance(player, HumanPlayer)
+    assert player.letter == "X"
+
+    player = select_player(letter="X", strategy="COMPUTER-EASY")
+    assert isinstance(player, ComputerPlayer)
+    assert player.letter == "X"
+
+    player = select_player(letter="X", strategy="COMPUTER-HARD")
+    assert isinstance(player, MinimaxPlayer)
+    assert player.letter == "X"
+
+    player = select_player(letter="X", strategy="MINIMAX-AB")
+    assert isinstance(player, MinimaxABPlayer)
+    assert player.letter == "X"
+
+    with pytest.raises(PlayerSelectionError) as err:
+        # we expect this code will raise an error
+        select_player(letter="X", strategy="OOPS")
+
+
+
+#
+# RANDOM
+#
 
 def test_computer_player():
 

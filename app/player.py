@@ -1,4 +1,8 @@
 
+class PlayerSelectionError(Exception):
+    pass
+
+
 
 def select_player(letter, strategy):
     """
@@ -19,6 +23,8 @@ def select_player(letter, strategy):
         return MinimaxPlayer(letter)
     elif strategy in ["MINIMAX-AB"]:
         return MinimaxABPlayer(letter)
+    else:
+        raise PlayerSelectionError("OOPS, unrecognized player type. Please try again!")
 
 
 
