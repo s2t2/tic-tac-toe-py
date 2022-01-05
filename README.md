@@ -42,6 +42,8 @@ Install package dependencies within the virtual environment (first time only):
 pip install -r requirements.txt
 ```
 
+> FYI: see the ["requirements.txt"](/requirements.txt) file for a list of packages that will be installed
+
 > NOTE: if this command throws an error like "Could not open requirements file: [Errno 2] No such file or directory", make sure you are running it from the repository's root directory, where the requirements.txt file exists (see the initial `cd` step above).
 
 ## Usage
