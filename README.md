@@ -8,6 +8,11 @@ An adversarial game.
 
 ![Tests](https://github.com/s2t2/tic-tac-toe-py/actions/workflows/python-app.yml/badge.svg)
 
+## Prerequisites
+
+  + Anaconda 3.7+
+  + Python 3.7+
+  + Pip
 
 ## Setup
 
