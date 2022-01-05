@@ -1,9 +1,12 @@
 
+# ignore some hidden files that appear on Mac OS:
 .DS_Store
 
-__pycache__
 
+# ignore some specific files that may get generated when running python modules or tests:
+__pycache__
 .pytest-cache
 
 
+# ignore any CSV files written to the data directory:
 data/*/*.csv

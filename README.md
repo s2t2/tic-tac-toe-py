@@ -4,18 +4,103 @@
 
 An adversarial game.
 
-
 [![Maintainability](https://api.codeclimate.com/v1/badges/23f08f09e8f419f21df0/maintainability)](https://codeclimate.com/github/s2t2/tic-tac-toe-py/maintainability)
 
 ![Tests](https://github.com/s2t2/tic-tac-toe-py/actions/workflows/python-app.yml/badge.svg)
 
+## Prerequisites
+
+  + Anaconda 3.7+
+  + Python 3.7+
+  + Pip
+
+## Setup
+
+Optionally fork this [remote repository](https://github.com/s2t2/tic-tac-toe-py), to create a copy under your own control.
+
+Then "clone" or download the remote repository (or your forked copy) onto your local computer, for example to your Desktop. Then navigate to wherever you downloaded the repo:
+
+```sh
+cd ~/Desktop/tic-tac-toe-py
+```
+
+Create a virtual environment (first time only):
+
+```sh
+conda create -n tictactoe-env python=3.8
+```
+
+Activate the virtual environment (first time, and any subsequent times you want to play):
+
+```sh
+conda activate tictactoe-env
+```
+
+Install package dependencies within the virtual environment (first time only):
+
+```sh
+pip install -r requirements.txt
+```
+
+## Player Types
+
+When you play games, you'll be able to select any of the following combinations of players:
+
+player type(s) | description
+--- | ---
+`HUMAN` | A human player who will input their selections.
+`COMPUTER-EASY` or `RANDOM` | A computer player which makes random selections. Easy to beat.
+`COMPUTER-HARD` or `MINIMAX` | A computer player which thinks ahead to make optimal selections. Uses the "minimax" algorithm to simulate moves and evaluate all possible game states. Impossible to beat.
+`MINIMAX-AB` | A much faster version of the hard computer player. Uses "alpha-beta" pruning to skip evaluations of unnecessary game states.
+
+## Usage
+
+### Game Play
+
+Play a game (human vs human, human vs computer, computer vs computer):
+
+```sh
+python -m app.game
+```
+
+
+### Game Simulation
+
+Play many games (computer vs computer), saves results to CSV file in "data" directory:
+
+```sh
+python -m app.jobs.play_games
+```
+
+Optionally pass the game count as an environment variable:
+
+```sh
+GAME_COUNT=3 python -m app.jobs.play_games
+```
+
+Optionally pass the player strategies as environment variables:
+
+```sh
+X_STRATEGY="COMPUTER-HARD" O_STRATEGY="COMPUTER-EASY" GAME_COUNT=100 python -m app.jobs.play_games
+```
+
+
+## Testing
+
+Run automated tests, to know whether the app is working as expected:
+
+```sh
+pytest
+```
+
 
 ## Demo
 
+Here is a demonstration of gameplay between computer players:
+
 ```
-(tictactoe-env)  --->> python -m app.game
-SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX' / 'MINIMAX-AB'): MINIMAX
-SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER' / 'MINIMAX' / 'MINIMAX-AB'): MINIMAX
+SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): COMPUTER-HARD
+SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): COMPUTER-HARD
 Would you like to use a pre-saved game state? (Y/N): n
 
                 A   B   C
@@ -165,45 +250,4 @@ PLAYER X THINKING...
 {'winner': None, 'reason': 'NO_MORE_SQUARES', 'message': 'TIE GAME'}
 ```
 
-## Setup
-
-```sh
-conda create -n tictactoe-env python=3.8
-```
-
-```sh
-conda activate tictactoe-env
-```
-
-```sh
-pip install -r requirements.txt
-```
-
-## Usage
-
-Play a game (human vs human, human vs computer, computer vs computer):
-
-```sh
-python -m app.game
-```
-
-Play many games (computer vs computer), saves results to CSV file in "data" directory:
-
-```sh
-python -m app.jobs.play_games
-
-
-X_STRATEGY="RANDOM" O_STRATEGY="RANDOM" GAME_COUNT=100 python -m app.jobs.play_games
-X_STRATEGY="MINIMAX" O_STRATEGY="MINIMAX" GAME_COUNT=100 python -m app.jobs.play_games
-
-X_STRATEGY="RANDOM" O_STRATEGY="MINIMAX" GAME_COUNT=100 python -m app.jobs.play_games
-X_STRATEGY="RANDOM" O_STRATEGY="MINIMAX-AB" GAME_COUNT=100 python -m app.jobs.play_games
-```
-
-
-
-## Testing
-
-```sh
-pytest
-```
+## [License](/LICENSE.md)
