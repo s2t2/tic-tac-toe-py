@@ -1,9 +1,24 @@
 
+# this is the ".gitignore" file!
+#
+# we use it to specify the names of files that should be ignored from version control.
+#
+# this may be desirable for any of the following reasons, depending on the circumstance:
+#
+#  1) reduces repo clutter by excluding metadata-related files (hidden files, cache, etc).
+#  2) allows customization of data files the program may use for input or output (i.e. CSV files)
+#  3) helps keep secret credentials secure (for example if we are storing environment variables in a .env file)
+#
+
+
+# ignore some hidden files that appear on Mac OS:
 .DS_Store
 
+
+# ignore some specific files that may get generated when running python modules or tests:
 __pycache__
+.pytest-cache
 
-# .pytest-cache
 
-
+# ignore any CSV files written to the data directory:
 data/*.csv

@@ -16,7 +16,9 @@ An adversarial game.
 
 ## Setup
 
-Optionally fork this [remote repository](https://github.com/s2t2/tic-tac-toe-py), to create a copy under your own control. Then "clone" or download the remote repository (or your forked copy) onto your local computer, for example to your Desktop. Then navigate to wherever you downloaded the repo:
+Optionally fork this [remote repository](https://github.com/s2t2/tic-tac-toe-py), to create a copy under your own control.
+
+Then "clone" or download the remote repository (or your forked copy) onto your local computer, for example to your Desktop. Then navigate to wherever you downloaded the repo:
 
 ```sh
 cd ~/Desktop/tic-tac-toe-py
@@ -44,7 +46,19 @@ pip install -r requirements.txt
 
 > FYI: see the ["requirements.txt"](/requirements.txt) file for a list of packages that will be installed
 
-> NOTE: if this command throws an error like "Could not open requirements file: [Errno 2] No such file or directory", make sure you are running it from the repository's root directory, where the requirements.txt file exists (see the initial `cd` step above).
+> NOTE: if this command throws an error like "Could not open requirements file: [Errno 2] No such file or directory", make sure you are running it from the repository's root directory, where the "requirements.txt" file exists (see the initial `cd` step above).
+
+
+## Player Types
+
+When you play games, you'll be able to select any of the following combinations of players:
+
+player type(s) | description
+--- | ---
+`HUMAN` | A human player who will input their selections.
+`COMPUTER-EASY` or `RANDOM` | A computer player which makes random selections. Easy to beat.
+`COMPUTER-HARD` or `MINIMAX` | A computer player which thinks ahead to make optimal selections. Uses the "minimax" algorithm to simulate moves and evaluate all possible game states. Impossible to beat.
+`MINIMAX-AB` | A much faster version of the hard computer player. Uses "alpha-beta" pruning to skip evaluations of unnecessary game states.
 
 ## Usage
 
@@ -54,9 +68,6 @@ Play a game (human vs human, human vs computer, computer vs computer):
 
 ```sh
 python -m app.game
-
-# optionally pass the player strategies as environment variables:
-APP_ENV="production" X_STRATEGY="COMPUTER-HARD" O_STRATEGY="COMPUTER-EASY" python -m app.game
 ```
 
 

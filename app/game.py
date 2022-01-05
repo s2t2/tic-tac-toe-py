@@ -91,64 +91,32 @@ class Game:
 
 
 
-
-
-
 if __name__ == "__main__":
 
-    from app import APP_ENV
-    import os
 
-    if APP_ENV == "development":
+    # PLAYER SELECTION
 
-        # PLAYER SELECTION
+    x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): ") or "HUMAN"
+    o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): ") or "COMPUTER-HARD"
 
-        x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): ") or "HUMAN"
-        o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): ") or "COMPUTER-HARD"
+    players = [
+        select_player(letter="X", strategy=x_strategy),
+        select_player(letter="O", strategy=o_strategy),
+    ]
 
-        players = [
-            select_player(letter="X", strategy=x_strategy),
-            select_player(letter="O", strategy=o_strategy),
-        ]
+    # PRELOAD SELECTION
 
-        # PRELOAD SELECTION
+    preload = input("Would you like to use a pre-saved game state? (Y/N): ") or "N"
+    if preload.upper() == "Y":
 
-        preload = input("Would you like to use a pre-saved game state? (Y/N): ") or "N"
-        if preload.upper() == "Y":
-
-            game = Game(players=players, turn_history=[
-                ("X", "A1"),
-                ("O", "B1"),
-                ("X", "B2"),
-            ])
-            game.play()
-
-        else:
-
-            game = Game(players=players)
-            game.play()
+        game = Game(players=players, turn_history=[
+            ("X", "A1"),
+            ("O", "B1"),
+            ("X", "B2"),
+        ])
+        game.play()
 
     else:
 
-
-        #game = Game(turn_history=[
-        #    ("X", "A1"),
-        #    ("O", "A2"),
-        #    ("X", "B1"),
-        #    ("O", "B2"),
-        #    ("X", "C1"),
-        #])
-        #print(game.outcome)
-
-        #print("---------------")
-
-        # SIMULATE GAMEPLAY
-
-        X_STRATEGY = os.getenv("X_STRATEGY", default="RANDOM")
-        O_STRATEGY = os.getenv("O_STRATEGY", default="COMPUTER-HARD")
-
-        game = Game(players=[
-            select_player(letter="X", strategy=X_STRATEGY),
-            select_player(letter="O", strategy=O_STRATEGY),
-        ])
+        game = Game(players=players)
         game.play()
