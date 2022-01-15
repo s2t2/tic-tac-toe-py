@@ -3,7 +3,7 @@
 
 __pycache__
 
-# .pytest-cache
+.pytest-cache
 
 
-data/*.csv
+data/*/*.csv
