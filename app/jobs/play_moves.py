@@ -2,6 +2,7 @@
 
 
 import os
+from types import SimpleNamespace as Outcome
 
 from pandas import DataFrame
 
@@ -30,30 +31,29 @@ if __name__ == "__main__":
 
         game.play()
 
-        breakpoint()
+        #outcome = Outcome(**game.outcome)
 
-        outcome = game.outcome
+        #breakpoint()
 
-        # PLAYBACK
 
-        moves = []
+        records = []
         for move_counter, move in enumerate(game.turn_history):
-            #print(game.outcome["message"])
 
-            breakpoint()
+            print(move)
+            # move is tuple like ('X', 'A2')
+            #active_letter, selected_square = move
 
-            active_player = "X" # TODO get from the move
-            active_player_outcome = "X_WINS" # TODO: function of the outcome
-            active_player_move_value = 1 # TODO: function of the outcome and the active player
+            #move_value = game_values[active_letter]
+
+            #active_player_move_value = 1 # TODO: function of the outcome and the active player
 
             records.append({
                 "game_id": game_counter+1, # start at 1 instead of 0
                 "move_id": move_counter+1,
                 "board_state": "TODO",
-                "active_player": active_player,
-                "move": "A1",
-                # playback allows us to know the eventual outcome of the move for the active player
-                "move_value": active_player_move_value,
+                "active_player": "TODO",
+                "move": "TODO",
+                "move_value": "TODO",
             })
 
     timer.end()

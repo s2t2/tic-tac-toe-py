@@ -56,6 +56,7 @@ class Board:
         return not any(self.selectable_squares)
 
 
+    # TODO: CACHING STRATEGY
     @property
     def winner(self):
         for square_names in WINNING_COMBINATIONS:
@@ -87,6 +88,13 @@ class Board:
     def winning_square_names(self):
         try:
             return self.winner["square_names"]
+        except:
+            return None
+
+    @property
+    def outcome_reason(self):
+        try:
+            return self.outcome["reason"]
         except:
             return None
 

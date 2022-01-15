@@ -56,7 +56,6 @@ class Game:
             self.take_turn(turn)
 
 
-
     @property
     def outcome(self):
         return self.board.outcome
@@ -72,6 +71,11 @@ class Game:
     @property
     def winning_square_names(self):
         return self.board.winning_square_names
+
+    @property
+    def outcome_reason(self):
+        return self.board.outcome_reason
+
 
     def play(self):
         while not self.outcome:
