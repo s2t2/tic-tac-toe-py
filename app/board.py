@@ -1,5 +1,13 @@
 
+#from functools import cache
+
 from app.square import Square
+
+SQUARE_NAMES = [
+    "A1", "B1", "C1",
+    "A2", "B2", "C2",
+    "A3", "B3", "C3",
+]
 
 # if a single player has any of these combination of squares, they win:
 WINNING_COMBINATIONS = [
@@ -13,19 +21,9 @@ WINNING_COMBINATIONS = [
     ["A1", "B2", "C3"], # [3,5,7], # Diagonal DESC
 ]
 
-SQUARE_NAMES = [
-    "A1", "B1", "C1",
-    "A2", "B2", "C2",
-    "A3", "B3", "C3",
-]
-
 class Board:
     def __init__(self):
-        self.squares = [
-            Square("A1"), Square("B1"), Square("C1"),
-            Square("A2"), Square("B2"), Square("C2"),
-            Square("A3"), Square("B3"), Square("C3"),
-        ]
+        self.squares = [Square(square_name) for square_name in SQUARE_NAMES]
 
     def __repr__(self):
         return f"""
@@ -39,16 +37,9 @@ class Board:
 
         """
 
-    def __str__(self):
-        return self.notation
-
     @property
-    def notation(self):
-        #line =  f"{self.get_square('A1').label}{self.get_square('B1').label}{self.get_square('C1').label}|"
-        #line += f"{self.get_square('A2').label}{self.get_square('B2').label}{self.get_square('C2').label}|"
-        #line += f"{self.get_square('A3').label}{self.get_square('B3').label}{self.get_square('C3').label}|"
-        ##line += f"{self.}|" Add active player?
-        #return line
+    def notation(self) -> str:
+        """Represents the board's 'state' in simple string format """
         return "".join([self.get_square(square_name).letter or "-" for square_name in SQUARE_NAMES])
 
 
@@ -76,8 +67,11 @@ class Board:
 
 
 
-
     # TODO: CACHING STRATEGY
+    # intended caching strategy:
+    # ... continue to evaluate until a non-null value appears,
+    # ... then cache it to skip future evaluation
+    #@cache
     @property
     def winner(self):
         print("DETERMINING WINNER")
@@ -99,6 +93,22 @@ class Board:
             return {"winner": winner, "reason": "THREE_IN_A_ROW", "message": f"{winner['letter']} WINS!" }
         elif self.out_of_squares:
             return {"winner": None, "reason": "NO_MORE_SQUARES", "message": "TIE GAME" }
+
+
+    @property
+    def winning_letter(self):
+        try:
+            return self.winner["letter"]
+        except:
+            return None
+
+    @property
+    def winning_square_names(self):
+        try:
+            return self.winner["square_names"]
+        except:
+            return None
+
 
 
 

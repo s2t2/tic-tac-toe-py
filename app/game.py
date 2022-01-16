@@ -1,8 +1,10 @@
 
 from itertools import cycle
+#from types import SimpleNamespace as Move
 
 from app.board import Board
 from app.player import select_player
+from app.move import Move
 
 class Game:
     def __init__(self, players=None, turn_history=None):
@@ -31,6 +33,7 @@ class Game:
 
         # load from pre-saved state
         self.turn_history = [] # instead of setting directly, simulate gamplay through the turn taking mechanism
+        self.move_history = [] # like the turn history, but stores board states as well (for model training)
         if turn_history:
             self.take_turns(turn_history)
 
@@ -44,8 +47,15 @@ class Game:
         Pass the turn param as a tuple in the form of (player_letter, square_name).
         """
         player_letter, square_name = turn
+        initial_board_state = self.board.notation # important to note this before changing the board
+
+        move = Move(board_state=initial_board_state, active_player=player_letter, selected_square=square_name)
+
+
+        # make the move / change the board state:
         self.board.set_square(square_name, player_letter)
         self.turn_history.append(turn)
+        self.move_history.append(move)
         self.toggle_active_player()
 
     def take_turns(self, turns: list):
