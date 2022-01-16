@@ -24,6 +24,7 @@ WINNING_COMBINATIONS = [
 class Board:
     def __init__(self):
         self.squares = [Square(square_name) for square_name in SQUARE_NAMES]
+        self._winner = None # a cached value for the eventual winner
 
     def __repr__(self):
         return f"""
@@ -39,7 +40,11 @@ class Board:
 
     @property
     def notation(self) -> str:
-        """Represents the board's 'state' in simple string format """
+        """
+        Represents the board's current state in simple string format like "-X-O-X-OX".
+
+        Position corresponds with square names ['A1','B1','C1','A2','B2','C2','A3','B3','C3'] and indices [0,1,2,3,4,5,6,7,8].
+        """
         return "".join([self.get_square(square_name).letter or "-" for square_name in SQUARE_NAMES])
 
 
@@ -66,15 +71,12 @@ class Board:
         return not any(self.selectable_squares)
 
 
-
-    # TODO: CACHING STRATEGY
-    # intended caching strategy:
-    # ... continue to evaluate until a non-null value appears,
-    # ... then cache it to skip future evaluation
-    #@cache
     @property
     def winner(self):
-        print("DETERMINING WINNER")
+        if self._winner:
+            return self._winner # use cached value to prevent unnecessary calculations
+
+        #print("DETERMINING WINNER")
         for square_names in WINNING_COMBINATIONS:
             squares = self.get_squares(square_names)
             # if the same player controls all three squares:
@@ -82,10 +84,11 @@ class Board:
             if len(letters) == 3 and len(list(set(letters))) == 1:
                 winning_letter = letters[0]
                 if winning_letter:
-                    return {"letter": winning_letter, "square_names": square_names}
+                    self._winner = {"letter": winning_letter, "square_names": square_names} # set cached value for future lookups
+                    return self._winner
+
         return None
 
-    # TODO: CACHING STRATEGY
     @property
     def outcome(self):
         winner = self.winner
@@ -93,6 +96,7 @@ class Board:
             return {"winner": winner, "reason": "THREE_IN_A_ROW", "message": f"{winner['letter']} WINS!" }
         elif self.out_of_squares:
             return {"winner": None, "reason": "NO_MORE_SQUARES", "message": "TIE GAME" }
+
 
 
     @property
@@ -133,3 +137,6 @@ if __name__ == "__main__":
     print(board.selectable_squares)
 
     print(board.outcome)
+
+
+    #breakpoint()
