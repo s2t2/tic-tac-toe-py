@@ -1,22 +1,10 @@
 
 
-# this is the "__init__.py" file.
 
-# we put one of these in the directory where our python files reside
+import os
 
-# the presence of this file in a given directory (even if empty)
-# ... helps facilitate the importation of functionality from any Python files that reside in that directory
+APP_ENV = os.getenv("APP_ENV", default="development")
 
-# for more info, see https://docs.python.org/3/tutorial/modules.html
+APP_VERSION = "1.0"
 
-
-
-
-
-
-
-#
-# import os
-#
-# APP_ENV = os.getenv("APP_ENV", default="development")
-#
+OPPOSITE_LETTERS = {"X": "O", "O": "X"}

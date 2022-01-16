@@ -3,6 +3,7 @@ from itertools import cycle
 
 from app.board import Board
 from app.player import select_player
+from app.move import Move
 
 class Game:
     def __init__(self, players=None, turn_history=None):
@@ -31,8 +32,10 @@ class Game:
 
         # load from pre-saved state
         self.turn_history = [] # instead of setting directly, simulate gamplay through the turn taking mechanism
+        self.move_history = [] # like the turn history, but stores board states as well (for model training)
         if turn_history:
             self.take_turns(turn_history)
+
 
     def toggle_active_player(self):
         self.active_player = next(self.players_cycle) # https://stackoverflow.com/questions/5237611/itertools-cycle-next
@@ -43,8 +46,14 @@ class Game:
         Pass the turn param as a tuple in the form of (player_letter, square_name).
         """
         player_letter, square_name = turn
+        initial_board_state = self.board.notation # important to note this before changing the board
+
+        move = Move(board_state=initial_board_state, active_player=player_letter, selected_square=square_name)
+
+        # make the move / change the board state:
         self.board.set_square(square_name, player_letter)
         self.turn_history.append(turn)
+        self.move_history.append(move)
         self.toggle_active_player()
 
     def take_turns(self, turns: list):
@@ -54,7 +63,6 @@ class Game:
         """
         for turn in turns:
             self.take_turn(turn)
-
 
 
     @property
@@ -73,6 +81,7 @@ class Game:
     def winning_square_names(self):
         return self.board.winning_square_names
 
+
     def play(self):
         while not self.outcome:
             print(self.board)
@@ -87,6 +96,10 @@ class Game:
                     next # ask the player for another input (this is only applicable for human players)
         print(self.board)
         print(self.outcome)
+
+
+
+
 
 
 

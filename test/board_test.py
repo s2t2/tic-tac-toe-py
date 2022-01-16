@@ -52,3 +52,22 @@ def test_winner_determination():
     board.set_square("C1", "X")
     assert board.winner == X_WINS_OUTCOME["winner"]
     assert board.outcome == X_WINS_OUTCOME
+
+
+
+def test_board_state_notation():
+
+    board = Board()
+    assert board.notation == "---------"
+
+    board.set_square("A1", "X")
+    assert board.notation ==  "X--------"
+
+    board.set_square("A2", "O")
+    assert board.notation ==  "X--O-----"
+
+    board.set_square("B1", "X")
+    assert board.notation ==  "XX-O-----"
+
+    board.set_square("B2", "O")
+    assert board.notation ==  "XX-OO----"

@@ -19,3 +19,7 @@ class Square:
     @property
     def is_selected(self):
         return bool(self.letter)
+
+    @property
+    def notation(self):
+        return self.letter or "-"

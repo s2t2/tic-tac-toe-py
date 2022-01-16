@@ -1,5 +1,13 @@
 
+#from functools import cache
+
 from app.square import Square
+
+SQUARE_NAMES = [
+    "A1", "B1", "C1",
+    "A2", "B2", "C2",
+    "A3", "B3", "C3",
+]
 
 # if a single player has any of these combination of squares, they win:
 WINNING_COMBINATIONS = [
@@ -15,11 +23,9 @@ WINNING_COMBINATIONS = [
 
 class Board:
     def __init__(self):
-        self.squares = [
-            Square("A1"), Square("B1"), Square("C1"),
-            Square("A2"), Square("B2"), Square("C2"),
-            Square("A3"), Square("B3"), Square("C3"),
-        ]
+        self.squares = [Square(square_name) for square_name in SQUARE_NAMES]
+        self._winner = None # a cached value for the eventual winner
+        self._outcome = None # a cached value for the eventual outcome
 
     def __repr__(self):
         return f"""
@@ -32,6 +38,16 @@ class Board:
             3   {self.get_square('A3').label} | {self.get_square('B3').label} | {self.get_square('C3').label}
 
         """
+
+    @property
+    def notation(self) -> str:
+        """
+        Represents the board's current state in simple string format like "-X-O-X-OX".
+
+        Position corresponds with square names ['A1','B1','C1','A2','B2','C2','A3','B3','C3'] and indices [0,1,2,3,4,5,6,7,8].
+        """
+        return "".join([square.notation for square in self.squares])
+
 
     def get_square(self, square_name):
         # todo: change to a dictionary-based lookup approach for additional computational efficiency, as necessary
@@ -58,6 +74,10 @@ class Board:
 
     @property
     def winner(self):
+        if self._winner:
+            return self._winner # use cached value to prevent unnecessary calculations
+
+        #print("DETERMINING WINNER")
         for square_names in WINNING_COMBINATIONS:
             squares = self.get_squares(square_names)
             # if the same player controls all three squares:
@@ -65,16 +85,24 @@ class Board:
             if len(letters) == 3 and len(list(set(letters))) == 1:
                 winning_letter = letters[0]
                 if winning_letter:
-                    return {"letter": winning_letter, "square_names": square_names}
+                    self._winner = {"letter": winning_letter, "square_names": square_names} # set cached value for future lookups
+                    return self._winner
+
         return None
 
     @property
     def outcome(self):
+        if self._outcome:
+            return self._outcome # use cached value to prevent unnecessary calculations
+
         winner = self.winner
         if winner:
-            return {"winner": winner, "reason": "THREE_IN_A_ROW", "message": f"{winner['letter']} WINS!" }
+            self._outcome = {"winner": winner, "reason": "THREE_IN_A_ROW", "message": f"{winner['letter']} WINS!" }
         elif self.out_of_squares:
-            return {"winner": None, "reason": "NO_MORE_SQUARES", "message": "TIE GAME" }
+            self._outcome = {"winner": None, "reason": "NO_MORE_SQUARES", "message": "TIE GAME" }
+
+        return self._outcome
+
 
     @property
     def winning_letter(self):
@@ -94,6 +122,13 @@ class Board:
 
 
 
+
+
+
+
+
+
+
 if __name__ == "__main__":
     board = Board()
     #print(board)
@@ -107,3 +142,6 @@ if __name__ == "__main__":
     print(board.selectable_squares)
 
     print(board.outcome)
+
+
+    #breakpoint()
