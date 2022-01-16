@@ -2,10 +2,11 @@
 
 
 import os
-from types import SimpleNamespace as Outcome
+#from types import SimpleNamespace as Outcome
 
 from pandas import DataFrame
 
+from app import OPPOSITE_LETTERS
 from app.game import Game
 from app.player import select_player
 from app.jobs.timer import Timer
@@ -29,46 +30,46 @@ if __name__ == "__main__":
             select_player(letter="O", strategy=O_STRATEGY),
         ])
 
+        #
+        # PLAY
+        #
+
         game.play()
 
-        #outcome = Outcome(**game.outcome)
+        # determine reward values for each player
+        if game.winner:
+            winning_letter = game.winner["letter"]
+            losing_letter = OPPOSITE_LETTERS[winning_letter]
 
-        #breakpoint()
+            rewards = {winning_letter: 1, losing_letter: 0}
+        else:
+            rewards = {"X": 1, "O": 0}
 
+        #
+        # PLAYBACK
+        #
 
-        records = []
-        for move_counter, move in enumerate(game.turn_history):
+        for move_counter, move in enumerate(game.move_history):
+            print(move) #>
 
-            print(move)
-            # move is tuple like ('X', 'A2')
-            #active_letter, selected_square = move
-
-            #move_value = game_values[active_letter]
-
-            #active_player_move_value = 1 # TODO: function of the outcome and the active player
+            active_player = move.active_player
 
             records.append({
-                "game_id": game_counter+1, # start at 1 instead of 0
-                "move_id": move_counter+1,
-                "board_state": "TODO",
-                "active_player": "TODO",
-                "move": "TODO",
-                "move_value": "TODO",
+                "game_id": game_counter + 1, # start ids at 1 instead of 0
+                "move_id": move_counter + 1, # start ids at 1 instead of 0
+                "board_state": move.board_state,
+                "player": active_player,
+                "selected_square": move.selected_square,
+                "reward": rewards[active_player],
             })
 
     timer.end()
     print("------------------------")
-    print("PLAYED", GAME_COUNT, "GAMES!", f"... (IN {timer.duration_seconds} SECONDS)")
-    print("GENERATED", len(records), "MOVES")
+    print("PLAYED", GAME_COUNT, "GAMES", f"IN {timer.duration_seconds} SECONDS")
+    print("TOTAL MOVES:", len(records))
 
     df = DataFrame(records)
-
     print(df.head())
-
-    print("-----------------")
-    print("MOVE VALUES:")
-
-    print(df["move_value"].value_counts(normalize=True))
 
     print("------------------------")
     print("SAVING DATA TO FILE...")
@@ -76,9 +77,10 @@ if __name__ == "__main__":
     csv_filename = f"{game.players[0].letter}_{game.players[0].player_type}"
     csv_filename += "_vs_"
     csv_filename += f"{game.players[1].letter}_{game.players[1].player_type}"
-    csv_filename += f"{GAME_COUNT}.csv"
+    csv_filename += f"_{GAME_COUNT}.csv"
     csv_filename = csv_filename.lower()
     csv_filepath = os.path.join(os.path.dirname(__file__), "..", "..", "data", "moves", csv_filename)
+
     df.to_csv(csv_filepath, index=False)
     print(os.path.abspath(csv_filepath))
 

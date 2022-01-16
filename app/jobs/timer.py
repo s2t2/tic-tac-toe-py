@@ -15,7 +15,7 @@ class Timer:
     @property
     def duration_seconds(self):
         try:
-            return self.end_at - self.start_at
+            return round((self.end_at - self.start_at), 4)
         except:
             return None
 

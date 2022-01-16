@@ -10,10 +10,10 @@ Generates moves dataset for model training and evaluation (the test/train splits
   + all losing player's moves get assigned a negative value (-1)
   + all moves resulting in a tie get a neutral score (0)
 
-Exports a CSV file in the "data" directory.
+Exports a CSV file in the "data" directory (e.g "/data/moves/x_random_vs_o_random_10000.csv").
 
 Generating the datasets:
 
 ```sh
-X_STRATEGY="RANDOM" O_STRATEGY="RANDOM" python -m app.jobs.play_moves
+GAME_COUNT=3 X_STRATEGY="RANDOM" O_STRATEGY="RANDOM" python -m app.jobs.play_moves
 ```

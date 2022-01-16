@@ -79,7 +79,7 @@ class ComputerPlayer(Player):
 import copy
 from math import inf
 
-OPPOSITE_LETTER = {"X": "O", "O": "X"}
+from app import OPPOSITE_LETTERS
 
 class MinimaxPlayer(ComputerPlayer):
     # https://www.youtube.com/watch?v=J1GoI5WHBto
@@ -177,7 +177,7 @@ class MinimaxPlayer(ComputerPlayer):
             return best_score
 
         else:
-            letter = OPPOSITE_LETTER[self.letter]
+            letter = OPPOSITE_LETTERS[self.letter]
 
             best_score = inf
             for square in board.selectable_squares:
@@ -315,7 +315,7 @@ class MinimaxABPlayer(MinimaxPlayer):
             return best_score #, alpha, beta
 
         else:
-            letter = OPPOSITE_LETTER[self.letter]
+            letter = OPPOSITE_LETTERS[self.letter]
 
             best_score = inf
             for square in board.selectable_squares:
