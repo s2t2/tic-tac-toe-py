@@ -1,5 +1,6 @@
 
 from itertools import cycle
+from copy import deepcopy
 
 from app.board import Board
 from app.player import select_player
@@ -46,9 +47,8 @@ class Game:
         Pass the turn param as a tuple in the form of (player_letter, square_name).
         """
         player_letter, square_name = turn
-        initial_board_state = self.board.notation # important to note this before changing the board
-
-        move = Move(board_state=initial_board_state, active_player=player_letter, selected_square=square_name)
+        initial_board = deepcopy(self.board) # important to note this before changing the board
+        move = Move(board=initial_board, active_player=player_letter, selected_square=square_name)
 
         # make the move / change the board state:
         self.board.set_square(square_name, player_letter)

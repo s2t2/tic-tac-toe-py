@@ -61,16 +61,16 @@ if __name__ == "__main__":
             records.append({
                 "game_id": game_counter + 1, # start ids at 1 instead of 0
                 "move_id": move_counter + 1, # start ids at 1 instead of 0
-                #"board_state": move.board_state,
-                "a1": game.board.get_square("A1").notation,
-                "b1": game.board.get_square("B1").notation,
-                "c1": game.board.get_square("C1").notation,
-                "a2": game.board.get_square("A2").notation,
-                "b2": game.board.get_square("B2").notation,
-                "c2": game.board.get_square("C2").notation,
-                "a3": game.board.get_square("A3").notation,
-                "b3": game.board.get_square("B3").notation,
-                "c3": game.board.get_square("C3").notation,
+                "board_state": move.board.notation,
+                "a1": move.board.get_square("A1").notation,
+                "b1": move.board.get_square("B1").notation,
+                "c1": move.board.get_square("C1").notation,
+                "a2": move.board.get_square("A2").notation,
+                "b2": move.board.get_square("B2").notation,
+                "c2": move.board.get_square("C2").notation,
+                "a3": move.board.get_square("A3").notation,
+                "b3": move.board.get_square("B3").notation,
+                "c3": move.board.get_square("C3").notation,
                 "player": active_player,
                 "square_name": move.selected_square,
                 #"square_idx": SQUARE_NAMES.index(move.selected_square), # translate squares to index 0-8 to match board notation (maybe)
