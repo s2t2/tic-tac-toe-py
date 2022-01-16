@@ -58,7 +58,11 @@ def test_winner_determination():
 def test_board_notation():
 
     board = Board()
-    assert str(board) == "---------"
+    expected_notation = "---------"
+    assert str(board) == expected_notation
+    assert board.notation == expected_notation
 
     board.set_square("A1", "X")
-    assert str(board) == "X--------"
+    expected_notation = "X--------"
+    assert str(board) == expected_notation
+    assert board.notation == expected_notation

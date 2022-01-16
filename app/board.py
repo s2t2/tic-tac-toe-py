@@ -40,14 +40,16 @@ class Board:
         """
 
     def __str__(self):
+        return self.notation
+
+    @property
+    def notation(self):
         #line =  f"{self.get_square('A1').label}{self.get_square('B1').label}{self.get_square('C1').label}|"
         #line += f"{self.get_square('A2').label}{self.get_square('B2').label}{self.get_square('C2').label}|"
         #line += f"{self.get_square('A3').label}{self.get_square('B3').label}{self.get_square('C3').label}|"
         ##line += f"{self.}|" Add active player?
         #return line
-
         return "".join([self.get_square(square_name).letter or "-" for square_name in SQUARE_NAMES])
-
 
 
     def get_square(self, square_name):
@@ -78,6 +80,7 @@ class Board:
     # TODO: CACHING STRATEGY
     @property
     def winner(self):
+        print("DETERMINING WINNER")
         for square_names in WINNING_COMBINATIONS:
             squares = self.get_squares(square_names)
             # if the same player controls all three squares:
@@ -88,6 +91,7 @@ class Board:
                     return {"letter": winning_letter, "square_names": square_names}
         return None
 
+    # TODO: CACHING STRATEGY
     @property
     def outcome(self):
         winner = self.winner

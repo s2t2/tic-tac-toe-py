@@ -34,6 +34,7 @@ class Game:
         if turn_history:
             self.take_turns(turn_history)
 
+
     def toggle_active_player(self):
         self.active_player = next(self.players_cycle) # https://stackoverflow.com/questions/5237611/itertools-cycle-next
 
@@ -91,6 +92,7 @@ class Game:
                     next # ask the player for another input (this is only applicable for human players)
         print(self.board)
         print(self.outcome)
+
 
 
 
