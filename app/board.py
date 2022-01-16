@@ -25,6 +25,7 @@ class Board:
     def __init__(self):
         self.squares = [Square(square_name) for square_name in SQUARE_NAMES]
         self._winner = None # a cached value for the eventual winner
+        self._outcome = None # a cached value for the eventual outcome
 
     def __repr__(self):
         return f"""
@@ -91,12 +92,16 @@ class Board:
 
     @property
     def outcome(self):
+        if self._outcome:
+            return self._outcome # use cached value to prevent unnecessary calculations
+
         winner = self.winner
         if winner:
-            return {"winner": winner, "reason": "THREE_IN_A_ROW", "message": f"{winner['letter']} WINS!" }
+            self._outcome = {"winner": winner, "reason": "THREE_IN_A_ROW", "message": f"{winner['letter']} WINS!" }
         elif self.out_of_squares:
-            return {"winner": None, "reason": "NO_MORE_SQUARES", "message": "TIE GAME" }
+            self._outcome = {"winner": None, "reason": "NO_MORE_SQUARES", "message": "TIE GAME" }
 
+        return self._outcome
 
 
     @property
