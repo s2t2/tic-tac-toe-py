@@ -36,6 +36,10 @@ if __name__ == "__main__":
 
         game.play()
 
+        #
+        # OUTCOME EVAL
+        #
+
         # determine reward values for each player
         if game.winner:
             winning_letter = game.winner["letter"]
@@ -45,23 +49,22 @@ if __name__ == "__main__":
         else:
             # give neutral scores to both players:
             rewards = {"X": 0, "O": 0}
+        print("------------------------")
+        print("REWARDS:", rewards)
 
         #
         # PLAYBACK
         #
 
         for move_counter, move in enumerate(game.move_history):
-            # print(move) #>
-
             active_player = move.active_player
-            selected_square_idx = SQUARE_NAMES.index(move.selected_square) # translate squares to match board notation
-
             records.append({
                 "game_id": game_counter + 1, # start ids at 1 instead of 0
                 "move_id": move_counter + 1, # start ids at 1 instead of 0
                 "board_state": move.board_state,
                 "player": active_player,
-                "square_idx": selected_square_idx,
+                "square_name": move.selected_square,
+                "square_idx": SQUARE_NAMES.index(move.selected_square), # translate squares to index 0-8 to match board notation (maybe)
                 "reward": rewards[active_player],
             })
 
