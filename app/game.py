@@ -1,6 +1,5 @@
 
 from itertools import cycle
-#from types import SimpleNamespace as Move
 
 from app.board import Board
 from app.player import select_player
@@ -51,7 +50,6 @@ class Game:
 
         move = Move(board_state=initial_board_state, active_player=player_letter, selected_square=square_name)
 
-
         # make the move / change the board state:
         self.board.set_square(square_name, player_letter)
         self.turn_history.append(turn)
@@ -82,10 +80,6 @@ class Game:
     @property
     def winning_square_names(self):
         return self.board.winning_square_names
-
-    @property
-    def outcome_reason(self):
-        return self.board.outcome_reason
 
 
     def play(self):

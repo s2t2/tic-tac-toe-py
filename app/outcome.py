@@ -3,14 +3,10 @@
 
 
 
-
-#from types import SimpleNamespace
-
-#class Outcome(SimpleNamespace):
-
+# consider a decorator for the outcome
 
 #class Outcome:
-#    def __init__(self):
+#    def __init__(self, game):
 #        pass
 #
 #    @property

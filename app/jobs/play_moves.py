@@ -2,11 +2,11 @@
 
 
 import os
-#from types import SimpleNamespace as Outcome
 
 from pandas import DataFrame
 
 from app import OPPOSITE_LETTERS
+from app.board import SQUARE_NAMES
 from app.game import Game
 from app.player import select_player
 from app.jobs.timer import Timer
@@ -40,10 +40,11 @@ if __name__ == "__main__":
         if game.winner:
             winning_letter = game.winner["letter"]
             losing_letter = OPPOSITE_LETTERS[winning_letter]
-
-            rewards = {winning_letter: 1, losing_letter: 0}
+            # reward the winner and punish the loser:
+            rewards = {winning_letter: 1, losing_letter: -1}
         else:
-            rewards = {"X": 1, "O": 0}
+            # give neutral scores to both players:
+            rewards = {"X": 0, "O": 0}
 
         #
         # PLAYBACK
@@ -53,13 +54,14 @@ if __name__ == "__main__":
             print(move) #>
 
             active_player = move.active_player
+            selected_square_idx = SQUARE_NAMES.index(move.selected_square) # translate squares to match board notation
 
             records.append({
                 "game_id": game_counter + 1, # start ids at 1 instead of 0
                 "move_id": move_counter + 1, # start ids at 1 instead of 0
                 "board_state": move.board_state,
                 "player": active_player,
-                "selected_square": move.selected_square,
+                "selected_square": selected_square_idx,
                 "reward": rewards[active_player],
             })
 

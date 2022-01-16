@@ -64,21 +64,15 @@ python -m app.game
 
 ### Game Simulation
 
-Play many games (computer vs computer), saves results to CSV file in "data" directory:
+Play many games (computer vs computer), saves results to CSV file in "data" directory. Optionally pass the game count, and/or player strategies as environment variables:
 
 ```sh
 python -m app.jobs.play_games
-```
 
-Optionally pass the game count as an environment variable:
-
-```sh
+# alternatively:
 GAME_COUNT=3 python -m app.jobs.play_games
-```
 
-Optionally pass the player strategies as environment variables:
-
-```sh
+# alternatively:
 X_STRATEGY="COMPUTER-HARD" O_STRATEGY="COMPUTER-EASY" GAME_COUNT=100 python -m app.jobs.play_games
 ```
 
