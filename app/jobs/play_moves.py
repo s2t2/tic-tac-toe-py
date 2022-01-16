@@ -51,7 +51,7 @@ if __name__ == "__main__":
         #
 
         for move_counter, move in enumerate(game.move_history):
-            print(move) #>
+            # print(move) #>
 
             active_player = move.active_player
             selected_square_idx = SQUARE_NAMES.index(move.selected_square) # translate squares to match board notation
@@ -61,7 +61,7 @@ if __name__ == "__main__":
                 "move_id": move_counter + 1, # start ids at 1 instead of 0
                 "board_state": move.board_state,
                 "player": active_player,
-                "selected_square": selected_square_idx,
+                "square_idx": selected_square_idx,
                 "reward": rewards[active_player],
             })
 
