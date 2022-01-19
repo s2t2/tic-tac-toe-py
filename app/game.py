@@ -99,13 +99,7 @@ class Game:
 
 
 
-
-
-
-
-
 if __name__ == "__main__":
-
 
     # PLAYER SELECTION
 
@@ -117,7 +111,7 @@ if __name__ == "__main__":
         select_player(letter="O", strategy=o_strategy),
     ]
 
-    # PRELOAD SELECTION
+    # GAME PLAY
 
     preload = input("Would you like to use a pre-saved game state? (Y/N): ") or "N"
     if preload.upper() == "Y":

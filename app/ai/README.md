@@ -1,6 +1,8 @@
 
 # Tic Tac Toe (AI)
 
+> NOTE: this is currently a work in progress!
+
 The [computer players](/app/player.py) in the Tic Tac Toe app use a predefined algorithm to select the best move. Let's see if we can train machine learning models to play the game instead.
 
 ## Generating Moves Data
@@ -44,3 +46,11 @@ Exports a CSV file in the "data" directory (e.g "/data/moves/x_random_vs_o_rando
 |3      |4      |`--X-X--O-`  |`O`    |8       |1    |
 |3      |5      |`--X-X--OO`  |`X`    |5       |-1   |
 |3      |6      |`--X-XX-OO`  |`O`    |6       |1    |
+
+## Model Selection and Evaluation
+
+TBD
+
+## Model Training
+
+TBD
