@@ -55,19 +55,19 @@ def test_winner_determination():
 
 
 
-def test_board_state_notation():
-
-    board = Board()
-    assert board.notation == "---------"
-
-    board.set_square("A1", "X")
-    assert board.notation ==  "X--------"
-
-    board.set_square("A2", "O")
-    assert board.notation ==  "X--O-----"
-
-    board.set_square("B1", "X")
-    assert board.notation ==  "XX-O-----"
-
-    board.set_square("B2", "O")
-    assert board.notation ==  "XX-OO----"
+#def test_board_state_notation():
+#
+#    board = Board()
+#    assert board.notation == "---------"
+#
+#    board.set_square("A1", "X")
+#    assert board.notation ==  "X--------"
+#
+#    board.set_square("A2", "O")
+#    assert board.notation ==  "X--O-----"
+#
+#    board.set_square("B1", "X")
+#    assert board.notation ==  "XX-O-----"
+#
+#    board.set_square("B2", "O")
+#    assert board.notation ==  "XX-OO----"
