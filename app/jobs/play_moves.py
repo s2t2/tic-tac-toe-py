@@ -86,9 +86,12 @@ class MoveEvaluator:
         if export:
             print("------------------------")
             print("SAVING DATA TO FILE...")
-            csv_filename = f"{game.players[0].letter}_{game.players[0].player_type}"
-            csv_filename += "_vs_"
-            csv_filename += f"{game.players[1].letter}_{game.players[1].player_type}"
+            #csv_filename = f"{self.players[0].letter}_{self.players[0].player_type.replace('-','')}"
+            #csv_filename += "_vs_"
+            #csv_filename += f"_{self.players[1].letter}_{self.players[1].player_type.replace('-','')}"
+
+            csv_filename = self.players[0].player_type.replace('-','') + "_"
+            csv_filename += self.players[1].player_type.replace('-','')
             csv_filename += f"_{self.GAME_COUNT}.csv"
             csv_filename = csv_filename.lower()
             csv_filepath = os.path.join(os.path.dirname(__file__), "..", "..", "data", "moves", csv_filename)

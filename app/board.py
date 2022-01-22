@@ -43,7 +43,7 @@ class Board:
     #def notation(self) -> str:
     #    """
     #    Represents the board's current state in simple string format like "-X-O-X-OX".
-    #
+#
     #    Position corresponds with square names ['A1','B1','C1','A2','B2','C2','A3','B3','C3'] and indices [0,1,2,3,4,5,6,7,8].
     #    """
     #    return "".join([square.notation for square in self.squares])

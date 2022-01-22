@@ -22,8 +22,4 @@ class Square:
 
     @property
     def notation(self):
-        return self.letter or "B"
-
-    @property
-    def display_notation(self):
         return self.letter or "-"
