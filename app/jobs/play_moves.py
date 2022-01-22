@@ -27,10 +27,10 @@ class EvaluatedGame(Game):
             # reward the winner and punish the loser:
             winning_letter = self.winner["letter"]
             losing_letter = OPPOSITE_LETTERS[winning_letter]
-            return {winning_letter: 1, losing_letter: -1}
+            return {winning_letter: 1, losing_letter: 0}
         else:
             # give neutral scores to both players:
-            return {"X": 0, "O": 0}
+            return {"X": 0.5, "O": 0.5}
 
 
 class MoveEvaluator:
