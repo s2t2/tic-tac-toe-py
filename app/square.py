@@ -23,3 +23,7 @@ class Square:
     @property
     def notation(self):
         return self.letter or "-"
+
+    @property
+    def training_notation(self):
+        return self.letter or "B"
