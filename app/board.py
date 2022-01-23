@@ -39,14 +39,14 @@ class Board:
 
         """
 
-    @property
-    def notation(self) -> str:
-        """
-        Represents the board's current state in simple string format like "-X-O-X-OX".
-
-        Position corresponds with square names ['A1','B1','C1','A2','B2','C2','A3','B3','C3'] and indices [0,1,2,3,4,5,6,7,8].
-        """
-        return "".join([square.notation for square in self.squares])
+    #@property
+    #def notation(self) -> str:
+    #    """
+    #    Represents the board's current state in simple string format like "-X-O-X-OX".
+#
+    #    Position corresponds with square names ['A1','B1','C1','A2','B2','C2','A3','B3','C3'] and indices [0,1,2,3,4,5,6,7,8].
+    #    """
+    #    return "".join([square.notation for square in self.squares])
 
 
     def get_square(self, square_name):
@@ -57,7 +57,13 @@ class Board:
     def get_squares(self, square_names):
         return [square for square in self.squares if square.name in square_names]
 
-    def set_square(self, square_name, player_letter):
+    def set_square(self, square_name: str, player_letter: str):
+        """
+        Params:
+            square_name
+
+            player_letter
+        """
         square = self.get_square(square_name)
         if not square.letter:
             square.letter = player_letter
