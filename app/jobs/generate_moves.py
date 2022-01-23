@@ -70,7 +70,7 @@ class MoveEvaluator:
                     "a3": move.board.get_square("A3").notation,
                     "b3": move.board.get_square("B3").notation,
                     "c3": move.board.get_square("C3").notation,
-                    #"player": active_player,
+                    "player": active_player,
                     #"square_name": move.selected_square,
                     #"square_idx": SQUARE_NAMES.index(move.selected_square), # translate squares to index 0-8 to match board notation (maybe)
                     "outcome": player_rewards[active_player],
