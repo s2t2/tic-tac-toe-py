@@ -1,7 +1,7 @@
 
 from itertools import cycle
 
-from app.board import Board
+from app.board import Board, SquareTakenError
 from app.player import select_player
 from app.move import Move
 
@@ -91,8 +91,11 @@ class Game:
                     turn = (self.active_player.letter, square_name)
                     self.take_turn(turn)
                     break # break out of the input loop to conclude the turn and go to the next player
+                except SquareTakenError as err:
+                    print("...", err)
+                    next
                 except:
-                    print(f"OOPS UNRECOGNIZED SQUARE NAME '{square_name}'. PLEASE TRY AGAIN...")
+                    print(f"... OOPS UNRECOGNIZED SQUARE NAME '{square_name}'. PLEASE TRY AGAIN...")
                     next # ask the player for another input (this is only applicable for human players)
         print(self.board)
         print(self.outcome)
