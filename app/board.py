@@ -21,6 +21,9 @@ WINNING_COMBINATIONS = [
     ["A1", "B2", "C3"], # [3,5,7], # Diagonal DESC
 ]
 
+class SquareTakenError(ValueError):
+    pass
+
 class Board:
     def __init__(self):
         self.squares = [Square(square_name) for square_name in SQUARE_NAMES]
@@ -59,7 +62,9 @@ class Board:
 
     def set_square(self, square_name, player_letter):
         square = self.get_square(square_name)
-        if not square.letter:
+        if square.letter:
+            raise SquareTakenError(f"OOPS, square '{square_name}' already taken. please try again...")
+        else:
             square.letter = player_letter
 
 
