@@ -16,7 +16,7 @@ from app.jobs.timer import Timer
 X_STRATEGY = os.getenv("X_STRATEGY", default="RANDOM")
 O_STRATEGY = os.getenv("O_STRATEGY", default="RANDOM")
 
-GAME_COUNT = int(os.getenv("GAME_COUNT", default="100_000"))
+GAME_COUNT = int(os.getenv("GAME_COUNT", default="100"))
 
 if __name__ == "__main__":
 
