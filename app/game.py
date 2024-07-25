@@ -106,8 +106,8 @@ if __name__ == "__main__":
 
     # PLAYER SELECTION
 
-    x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): ") or "HUMAN"
-    o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): ") or "COMPUTER-HARD"
+    x_strategy = input("SELECT X PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): ").upper() or "HUMAN"
+    o_strategy = input("SELECT O PLAYER TYPE ('HUMAN' / 'COMPUTER-EASY' / 'COMPUTER-HARD'): ").upper() or "COMPUTER-HARD"
 
     players = [
         select_player(letter="X", strategy=x_strategy),
@@ -116,7 +116,7 @@ if __name__ == "__main__":
 
     # GAME PLAY
 
-    preload = input("Would you like to use a pre-saved game state? (Y/N): ") or "N"
+    preload = input("Would you like to use a pre-saved game state? (Y/N): ").upper() or "N"
     if preload.upper() == "Y":
 
         game = Game(players=players, turn_history=[

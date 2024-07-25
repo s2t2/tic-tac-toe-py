@@ -9,10 +9,10 @@ from app.game import Game
 from app.player import select_player
 from app.jobs.timer import Timer
 
-X_STRATEGY = os.getenv("X_STRATEGY", default="RANDOM")
-O_STRATEGY = os.getenv("O_STRATEGY", default="RANDOM")
+X_STRATEGY = os.getenv("X_STRATEGY", default="RANDOM").upper()
+O_STRATEGY = os.getenv("O_STRATEGY", default="RANDOM").upper()
 
-GAME_COUNT = int(os.getenv("GAME_COUNT", default="100_000"))
+GAME_COUNT = int(os.getenv("GAME_COUNT", default="1_000"))
 
 
 if __name__ == "__main__":

@@ -25,7 +25,7 @@ cd ~/Desktop/tic-tac-toe-py
 Create a virtual environment:
 
 ```sh
-conda create -n tictactoe-env python=3.8
+conda create -n tictactoe-env python=3.11
 ```
 
 Activate the virtual environment:
