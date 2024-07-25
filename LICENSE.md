@@ -1,7 +1,7 @@
 
 # License
 
-Copyright (c) 2021-2022 Michael J Rossetti.
+Copyright (c) 2021-2024 Michael J Rossetti.
 
 This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. See full license at http://creativecommons.org/licenses/by-nc/4.0/, as summarized below.
 
