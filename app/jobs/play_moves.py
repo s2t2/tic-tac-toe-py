@@ -4,6 +4,7 @@
 import os
 
 from pandas import DataFrame
+from dotenv import load_dotenv
 
 from app import OPPOSITE_LETTERS
 from app.board import SQUARE_NAMES
@@ -11,6 +12,7 @@ from app.game import Game
 from app.player import select_player
 from app.jobs.timer import Timer
 
+load_dotenv() # read env vars from the ".env" file
 
 # for the strategies, use "RANDOM" for random moves, or "MINIMAX-AB" for expert moves
 X_STRATEGY = os.getenv("X_STRATEGY", default="RANDOM")
@@ -18,7 +20,11 @@ O_STRATEGY = os.getenv("O_STRATEGY", default="RANDOM")
 
 GAME_COUNT = int(os.getenv("GAME_COUNT", default="100"))
 
+
 if __name__ == "__main__":
+
+    print("X STRATEGY:", X_STRATEGY)
+    print("O STRATEGY:", O_STRATEGY)
 
     timer = Timer()
     timer.start()

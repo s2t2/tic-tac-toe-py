@@ -8,6 +8,9 @@
 __pycache__
 .pytest-cache
 
+# ignore the ".env" file which often holds secret credentials
+# although in this case only stores configuration variables
+.env
 
 # ignore any CSV files written to the data directory:
 data/*/*.csv
