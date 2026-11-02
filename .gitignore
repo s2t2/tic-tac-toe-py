@@ -1,4 +1,10 @@
 
+# this file lists files and folders that should be IGNORED
+# from version control
+# and not checked-in or uploaded to GitHub
+
+# ignore secret env variable from the ".env" file:
+.env
 
 # ignore some hidden files that appear on Mac OS:
 .DS_Store
