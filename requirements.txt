@@ -21,3 +21,8 @@ pytest
 # the "pandas" package helps with data processing and interfacing with CSV files
 # see: https://pypi.org/project/pandas/
 pandas
+
+# we want to load env vars from the ".env" file so we need
+# the python-dotenv package
+# https://pypi.org/project/python-dotenv/
+python-dotenv
