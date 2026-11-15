@@ -11,7 +11,6 @@ from app.player import select_player
 from app.jobs.timer import Timer
 
 load_dotenv() # checks the .env file for env vars so the os module can use them
-
 X_STRATEGY = os.getenv("X_STRATEGY", default="RANDOM").upper()
 O_STRATEGY = os.getenv("O_STRATEGY", default="RANDOM").upper()
 
